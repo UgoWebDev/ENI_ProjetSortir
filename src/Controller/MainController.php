@@ -17,11 +17,19 @@ class MainController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager): Response
     {
-        $mainForm = $this->createForm(MainType::class);
-        $mainForm->handleRequest($request);
-        if($mainForm->isSubmitted() && $mainForm->isValid()) {
+        $searchOptions = [];
+        $searchOptions['campus'] = 1;
+        $searchOptions['recherche'] = '';
+        $searchOptions['dateDebut'] = null;
+        $searchOptions['dateFin'] = null;
+        $searchOptions['isOrganisateur'] = true;
+        $searchOptions['isInscrit'] = true;
+        $searchOptions['isNotInscrit'] = true;
+        $searchOptions['isPassed'] = false;
 
-        }
+        $mainForm = $this->createForm(MainType::class, $searchOptions);
+        $mainForm->handleRequest($request);
+
 
         return $this->render('main/accueil.html.twig', [
             'mainForm' => $mainForm->createView()

@@ -3,5 +3,11 @@
 {% block title %}{{ parent () }} | Accueil{% endblock %}
 
 {% block body %}
-    <p>Bienvenu sur notre site</p>
+    <div>
+        {{ form_start(mainForm) }}
+
+        {{ form_widget(mainForm) }}
+        <button>Create !</button>
+        {{ form_end(mainForm) }}
+    </div>
 {% endblock %}

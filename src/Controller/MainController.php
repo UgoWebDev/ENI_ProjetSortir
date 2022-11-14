@@ -6,12 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/sortie', name: 'sortie_')]
-class SortieController extends AbstractController
+class MainController extends AbstractController
 {
-    #[Route('/', name: 'list')]
-    public function list(): Response
+    #[Route('/main', name: 'main_home')]
+    public function home(): Response
     {
-        return $this->render('sortie/index.html.twig');
+        return $this->render('main/accueil.html.twig');
     }
 }

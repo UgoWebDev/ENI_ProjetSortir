@@ -1,0 +1,16 @@
+header
+{
+    display: flex;
+}
+
+.logo
+{
+    font-family: 'Fredoka One', cursive, Verdana, sans-serif;
+    font-size: 3em;
+}
+
+li
+{
+    text-decoration: none;
+    color: black;
+}

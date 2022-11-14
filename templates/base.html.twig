@@ -4,7 +4,8 @@
         <meta charset="UTF-8">
         <title>{% block title %}Sortie.com{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
         {# Font du site #}
         {# font du logo #}
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,6 +22,6 @@
         </main>
 
         <footer>
-            <div>&copy; {{"now"|date("Y")}} <em class="logo">sortir.com</em> by Ugo, Patrick, Pierre</div>
+            <div>&copy; {{"now"|date("Y")}} sortir.com by Ugo, Patrick, Pierre</div>
         </footer>
     </body>

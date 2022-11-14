@@ -15,18 +15,18 @@ class Ville
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 10)]
+    #[ORM\Column(length: 50)]
     private ?string $codePostal = null;
 
-    #[ORM\OneToMany(mappedBy: 'ville', targetEntity: Lieu::class, orphanRemoval: true)]
-    private Collection $lieus;
+    #[ORM\OneToMany(mappedBy: 'ville', targetEntity: Lieu::class)]
+    private Collection $lieux;
 
     public function __construct()
     {
-        $this->lieus = new ArrayCollection();
+        $this->lieux = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -61,27 +61,27 @@ class Ville
     /**
      * @return Collection<int, Lieu>
      */
-    public function getLieus(): Collection
+    public function getLieux(): Collection
     {
-        return $this->lieus;
+        return $this->lieux;
     }
 
-    public function addLieu(Lieu $lieu): self
+    public function addLieux(Lieu $lieux): self
     {
-        if (!$this->lieus->contains($lieu)) {
-            $this->lieus->add($lieu);
-            $lieu->setVille($this);
+        if (!$this->lieux->contains($lieux)) {
+            $this->lieux->add($lieux);
+            $lieux->setVille($this);
         }
 
         return $this;
     }
 
-    public function removeLieu(Lieu $lieu): self
+    public function removeLieux(Lieu $lieux): self
     {
-        if ($this->lieus->removeElement($lieu)) {
+        if ($this->lieux->removeElement($lieux)) {
             // set the owning side to null (unless already changed)
-            if ($lieu->getVille() === $this) {
-                $lieu->setVille(null);
+            if ($lieux->getVille() === $this) {
+                $lieux->setVille(null);
             }
         }
 

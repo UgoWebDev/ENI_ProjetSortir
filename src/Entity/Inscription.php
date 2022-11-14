@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\InscriptionRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -17,12 +18,12 @@ class Inscription
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $dateInscription = null;
+    private ?DateTimeInterface $dateInscription = null;
 
-    #[ORM\OneToMany(mappedBy: 'inscription', targetEntity: Participant::class)]
+    #[ORM\OneToMany(mappedBy: 'estInscrit', targetEntity: Participant::class)]
     private Collection $participants;
 
-    #[ORM\OneToMany(mappedBy: 'inscription', targetEntity: Sortie::class)]
+    #[ORM\OneToMany(mappedBy: 'inclus', targetEntity: Sortie::class)]
     private Collection $sorties;
 
     public function __construct()
@@ -36,12 +37,12 @@ class Inscription
         return $this->id;
     }
 
-    public function getDateInscription(): ?\DateTimeInterface
+    public function getDateInscription(): ?DateTimeInterface
     {
         return $this->dateInscription;
     }
 
-    public function setDateInscription(\DateTimeInterface $dateInscription): self
+    public function setDateInscription(DateTimeInterface $dateInscription): self
     {
         $this->dateInscription = $dateInscription;
 
@@ -60,7 +61,7 @@ class Inscription
     {
         if (!$this->participants->contains($participant)) {
             $this->participants->add($participant);
-            $participant->setInscription($this);
+            $participant->setEstInscrit($this);
         }
 
         return $this;
@@ -70,8 +71,8 @@ class Inscription
     {
         if ($this->participants->removeElement($participant)) {
             // set the owning side to null (unless already changed)
-            if ($participant->getInscription() === $this) {
-                $participant->setInscription(null);
+            if ($participant->getEstInscrit() === $this) {
+                $participant->setEstInscrit(null);
             }
         }
 
@@ -90,7 +91,7 @@ class Inscription
     {
         if (!$this->sorties->contains($sorty)) {
             $this->sorties->add($sorty);
-            $sorty->setInscription($this);
+            $sorty->setInclus($this);
         }
 
         return $this;
@@ -100,8 +101,8 @@ class Inscription
     {
         if ($this->sorties->removeElement($sorty)) {
             // set the owning side to null (unless already changed)
-            if ($sorty->getInscription() === $this) {
-                $sorty->setInscription(null);
+            if ($sorty->getInclus() === $this) {
+                $sorty->setInclus(null);
             }
         }
 

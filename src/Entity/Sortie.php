@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\SortieRepository;
+use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -14,40 +15,42 @@ class Sortie
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $dateHeureDebut = null;
+    private ?DateTimeInterface $dateHeureDebut = null;
 
     #[ORM\Column]
     private ?int $duree = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $dateLimiteInscription = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?DateTimeInterface $dateLimiteInscription = null;
 
     #[ORM\Column]
-    private ?int $nbInscriptionMax = null;
+    private ?int $nbInscriptionsMax = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $infosSortie = null;
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Etat $etat = null;
+    private ?Lieu $lieu = null;
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Campus $siteOrganisateur = null;
+
+    #[ORM\ManyToOne(inversedBy: 'sorties')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Participant $organisateur = null;
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]
     private ?Inscription $inclus = null;
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Lieu $lieu = null;
-
-    #[ORM\ManyToOne(inversedBy: 'sorties')]
-    private ?Participant $orgamisateur = null;
+    private ?Etat $etat = null;
 
     public function getId(): ?int
     {
@@ -66,12 +69,12 @@ class Sortie
         return $this;
     }
 
-    public function getDateHeureDebut(): ?\DateTimeInterface
+    public function getDateHeureDebut(): ?DateTimeInterface
     {
         return $this->dateHeureDebut;
     }
 
-    public function setDateHeureDebut(\DateTimeInterface $dateHeureDebut): self
+    public function setDateHeureDebut(DateTimeInterface $dateHeureDebut): self
     {
         $this->dateHeureDebut = $dateHeureDebut;
 
@@ -90,26 +93,26 @@ class Sortie
         return $this;
     }
 
-    public function getDateLimiteInscription(): ?\DateTimeInterface
+    public function getDateLimiteInscription(): ?DateTimeInterface
     {
         return $this->dateLimiteInscription;
     }
 
-    public function setDateLimiteInscription(\DateTimeInterface $dateLimiteInscription): self
+    public function setDateLimiteInscription(DateTimeInterface $dateLimiteInscription): self
     {
         $this->dateLimiteInscription = $dateLimiteInscription;
 
         return $this;
     }
 
-    public function getNbInscriptionMax(): ?int
+    public function getNbInscriptionsMax(): ?int
     {
-        return $this->nbInscriptionMax;
+        return $this->nbInscriptionsMax;
     }
 
-    public function setNbInscriptionMax(int $nbInscriptionMax): self
+    public function setNbInscriptionsMax(int $nbInscriptionsMax): self
     {
-        $this->nbInscriptionMax = $nbInscriptionMax;
+        $this->nbInscriptionsMax = $nbInscriptionsMax;
 
         return $this;
     }
@@ -126,14 +129,14 @@ class Sortie
         return $this;
     }
 
-    public function getEtat(): ?Etat
+    public function getLieu(): ?Lieu
     {
-        return $this->etat;
+        return $this->lieu;
     }
 
-    public function setEtat(?Etat $etat): self
+    public function setLieu(?Lieu $lieu): self
     {
-        $this->etat = $etat;
+        $this->lieu = $lieu;
 
         return $this;
     }
@@ -150,38 +153,38 @@ class Sortie
         return $this;
     }
 
-    public function getInscription(): ?Inscription
+    public function getOrganisateur(): ?Participant
     {
-        return $this->inscription;
+        return $this->organisateur;
     }
 
-    public function setInscription(?Inscription $inscription): self
+    public function setOrganisateur(?Participant $organisateur): self
     {
-        $this->inscription = $inscription;
+        $this->organisateur = $organisateur;
 
         return $this;
     }
 
-    public function getLieu(): ?Lieu
+    public function getInclus(): ?Inscription
     {
-        return $this->lieu;
+        return $this->inclus;
     }
 
-    public function setLieu(?Lieu $lieu): self
+    public function setInclus(?Inscription $inclus): self
     {
-        $this->lieu = $lieu;
+        $this->inclus = $inclus;
 
         return $this;
     }
 
-    public function getOrgamisateur(): ?Participant
+    public function getEtat(): ?Etat
     {
-        return $this->orgamisateur;
+        return $this->etat;
     }
 
-    public function setOrgamisateur(?Participant $orgamisateur): self
+    public function setEtat(?Etat $etat): self
     {
-        $this->orgamisateur = $orgamisateur;
+        $this->etat = $etat;
 
         return $this;
     }

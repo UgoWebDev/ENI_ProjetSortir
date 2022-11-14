@@ -29,13 +29,13 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 255)]
     private ?string $prenom = null;
 
-    #[ORM\Column(length: 20, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $telephone = null;
 
     #[ORM\Column]
@@ -46,12 +46,12 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToOne(inversedBy: 'participants')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Campus $campus = null;
+    private ?Campus $estRattacheA = null;
 
     #[ORM\ManyToOne(inversedBy: 'participants')]
-    private ?Inscription $inscription = null;
+    private ?Inscription $estInscrit = null;
 
-    #[ORM\OneToMany(mappedBy: 'orgamisateur', targetEntity: Sortie::class)]
+    #[ORM\OneToMany(mappedBy: 'organisateur', targetEntity: Sortie::class)]
     private Collection $sorties;
 
     public function __construct()
@@ -189,26 +189,26 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCampus(): ?Campus
+    public function getEstRattacheA(): ?Campus
     {
-        return $this->campus;
+        return $this->estRattacheA;
     }
 
-    public function setCampus(?Campus $campus): self
+    public function setEstRattacheA(?Campus $estRattacheA): self
     {
-        $this->campus = $campus;
+        $this->estRattacheA = $estRattacheA;
 
         return $this;
     }
 
-    public function getInscription(): ?Inscription
+    public function getEstInscrit(): ?Inscription
     {
-        return $this->inscription;
+        return $this->estInscrit;
     }
 
-    public function setInscription(?Inscription $inscription): self
+    public function setEstInscrit(?Inscription $estInscrit): self
     {
-        $this->inscription = $inscription;
+        $this->estInscrit = $estInscrit;
 
         return $this;
     }
@@ -225,7 +225,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->sorties->contains($sorty)) {
             $this->sorties->add($sorty);
-            $sorty->setOrgamisateur($this);
+            $sorty->setOrganisateur($this);
         }
 
         return $this;
@@ -235,8 +235,8 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->sorties->removeElement($sorty)) {
             // set the owning side to null (unless already changed)
-            if ($sorty->getOrgamisateur() === $this) {
-                $sorty->setOrgamisateur(null);
+            if ($sorty->getOrganisateur() === $this) {
+                $sorty->setOrganisateur(null);
             }
         }
 

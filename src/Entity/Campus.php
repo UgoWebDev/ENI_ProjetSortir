@@ -15,13 +15,13 @@ class Campus
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\OneToMany(mappedBy: 'campus', targetEntity: Participant::class)]
+    #[ORM\OneToMany(mappedBy: 'estRattacheA', targetEntity: Participant::class)]
     private Collection $participants;
 
-    #[ORM\OneToMany(mappedBy: 'campus', targetEntity: Sortie::class)]
+    #[ORM\OneToMany(mappedBy: 'siteOrganisateur', targetEntity: Sortie::class)]
     private Collection $sorties;
 
     public function __construct()
@@ -59,7 +59,7 @@ class Campus
     {
         if (!$this->participants->contains($participant)) {
             $this->participants->add($participant);
-            $participant->setCampus($this);
+            $participant->setEstRattacheA($this);
         }
 
         return $this;
@@ -69,8 +69,8 @@ class Campus
     {
         if ($this->participants->removeElement($participant)) {
             // set the owning side to null (unless already changed)
-            if ($participant->getCampus() === $this) {
-                $participant->setCampus(null);
+            if ($participant->getEstRattacheA() === $this) {
+                $participant->setEstRattacheA(null);
             }
         }
 
@@ -89,7 +89,7 @@ class Campus
     {
         if (!$this->sorties->contains($sorty)) {
             $this->sorties->add($sorty);
-            $sorty->setCampus($this);
+            $sorty->setSiteOrganisateur($this);
         }
 
         return $this;
@@ -99,8 +99,8 @@ class Campus
     {
         if ($this->sorties->removeElement($sorty)) {
             // set the owning side to null (unless already changed)
-            if ($sorty->getCampus() === $this) {
-                $sorty->setCampus(null);
+            if ($sorty->getSiteOrganisateur() === $this) {
+                $sorty->setSiteOrganisateur(null);
             }
         }
 

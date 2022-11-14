@@ -47,20 +47,14 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private ?bool $isActif = null;
 
     #[ORM\ManyToOne(inversedBy: 'participants')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Campus $estRattacheA = null;
+
+    #[ORM\ManyToOne(inversedBy: 'participants')]
     private ?Inscription $estInscrit = null;
 
     #[ORM\OneToMany(mappedBy: 'organisateur', targetEntity: Sortie::class)]
     private Collection $sorties;
-
-    #[ORM\Column(length: 30)]
-    private ?string $username = null;
-
-    #[ORM\Column(length: 30)]
-    private ?string $pseudo = null;
-
-    #[ORM\Column(length: 60)]
-    private ?string $campus = null;
-
 
     public function __construct()
     {
@@ -197,6 +191,18 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getEstRattacheA(): ?Campus
+    {
+        return $this->estRattacheA;
+    }
+
+    public function setEstRattacheA(?Campus $estRattacheA): self
+    {
+        $this->estRattacheA = $estRattacheA;
+
+        return $this;
+    }
+
     public function getEstInscrit(): ?Inscription
     {
         return $this->estInscrit;
@@ -238,42 +244,4 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    public function getPseudo(): ?string
-    {
-        return $this->pseudo;
-    }
-
-    public function setPseudo(string $pseudo): self
-    {
-        $this->pseudo = $pseudo;
-
-        return $this;
-    }
-
-    public function getCampus(): ?string
-    {
-        return $this->campus;
-    }
-
-    public function setCampus(string $campus): self
-    {
-        $this->campus = $campus;
-
-        return $this;
-    }
-
-
 }

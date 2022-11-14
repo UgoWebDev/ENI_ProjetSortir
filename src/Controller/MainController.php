@@ -6,9 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/main', name: 'main_')]
 class MainController extends AbstractController
 {
-    #[Route('/main', name: 'main_home')]
+    #[Route('/', name: 'home')]
     public function home(): Response
     {
         return $this->render('main/accueil.html.twig');

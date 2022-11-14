@@ -24,7 +24,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private array $roles = [];
-
+    /* commentaire retour à normale
     /**
      * @var string The hashed password
      */

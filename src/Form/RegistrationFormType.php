@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Campus;
 use App\Entity\Participant;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -42,11 +44,11 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
 
-
-
-            ->add('telephone');
-            //->add('campus', ChoiceType::class)
-            //todo ajouter choix
+            ->add('telephone')
+            ->add('estRattacheA', EntityType::class, [
+                'class' => Campus::class,
+                'choice_label' => 'nom',
+            ]);
 
     }
 

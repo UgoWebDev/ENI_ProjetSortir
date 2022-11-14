@@ -6,10 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/sortie', name: 'sortie_')]
 class SortieController extends AbstractController
 {
-    #[Route('/sortie', name: 'app_sortie')]
-    public function index(): Response
+    #[Route('/', name: 'list')]
+    public function list(): Response
     {
         return $this->render('sortie/index.html.twig', [
             'controller_name' => 'SortieController',

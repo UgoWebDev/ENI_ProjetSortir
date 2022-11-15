@@ -22,11 +22,15 @@
                 {{ form_row(mainForm.isPassed)}}
             </div>
             <div class="search">
-                <button class="btn">Rechercher !</button>
+                {{ form_row(mainForm.search)}}
+
             </div>
         </div>
+        <div class="container">
+            {{ form_row(mainForm.create)}}
+        </div>
 
-        <button class="btn">Create !</button>
+
         {{ form_end(mainForm) }}
     </div>
 {% endblock %}

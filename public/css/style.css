@@ -107,7 +107,7 @@ input[type=text], input[type=number], input[type=password]{
     align-items: center;
 }
 
-.btn{
+#main_search, #main_create{
     border:none;
     outline:none;
     background:none;

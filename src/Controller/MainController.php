@@ -22,15 +22,15 @@ class MainController extends AbstractController
     {
 
             $searchOptions['campus'] = 1;
-            $searchOptions['searchName'] = 'test';
+            $searchOptions['searchName'] = '';
             $searchOptions['dateDebut'] = null;
             $searchOptions['dateFin'] = null;
             $searchOptions['isOrganisateur'] = true;
             $searchOptions['isInscrit'] = true;
             $searchOptions['isNotInscrit'] = true;
             $searchOptions['isPassed'] = false;
+            $searchOptions['sorties'] = $sortieRepository -> getSorties($searchOptions);
 
-            $sorties = $sortieRepository -> getSorties($searchOptions);
 
         dump($searchOptions);
 
@@ -38,18 +38,23 @@ class MainController extends AbstractController
         $mainForm->handleRequest($request);
 
         if($mainForm->isSubmitted() && $mainForm->isValid()) {
-            $searchOptions['campus']= $mainForm->get('siteOrganisateur')->getData()->getID();
-            $searchOptions['searchName'] = $mainForm->get('searchName')->getData();
-            $searchOptions['dateDebut'] = $mainForm->get('dateDebut')->getData();
-            $searchOptions['dateFin'] = $mainForm->get('dateFin')->getData();
-            $searchOptions['isOrganisateur'] = $mainForm->get('isOrganisateur')->getData();
-            $searchOptions['isInscrit'] = $mainForm->get('isInscrit')->getData();
-            $searchOptions['isNotInscrit'] = $mainForm->get('isNotInscrit')->getData();
-            $searchOptions['isPassed'] = $mainForm->get('isPassed')->getData();
+            if ($mainForm->getClickedButton() && 'search' === $mainForm->getClickedButton()->getName()) {
+                $searchOptions['campus'] = $mainForm->get('siteOrganisateur')->getData()->getID();
+                $searchOptions['searchName'] = $mainForm->get('searchName')->getData();
+                $searchOptions['dateDebut'] = $mainForm->get('dateDebut')->getData();
+                $searchOptions['dateFin'] = $mainForm->get('dateFin')->getData();
+                $searchOptions['isOrganisateur'] = $mainForm->get('isOrganisateur')->getData();
+                $searchOptions['isInscrit'] = $mainForm->get('isInscrit')->getData();
+                $searchOptions['isNotInscrit'] = $mainForm->get('isNotInscrit')->getData();
+                $searchOptions['isPassed'] = $mainForm->get('isPassed')->getData();
+                $searchOptions['sorties'] = $sortieRepository -> getSorties($searchOptions);
+            }
+            if ($mainForm->getClickedButton() && 'create' === $mainForm->getClickedButton()->getName()) {
+                return $this->redirectToRoute('sortie_create');
+            }
 
             dump($searchOptions);
 
-//            return $this->redirectToRoute('main_home');
         }
 
         return $this->render('main/accueil.html.twig', [

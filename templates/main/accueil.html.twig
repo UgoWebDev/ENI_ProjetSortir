@@ -26,6 +26,33 @@
 
             </div>
         </div>
+        <div>
+            <table>
+                <tr>
+                    <th>Nom de la sortie</th>
+                    <th>Date de la sortie</th>
+                    <th>Clôture</th>
+                    <th>inscrits/places</th>
+                    <th>Etat</th>
+                    <th>Inscrit</th>
+                    <th>Organisateur</th>
+                    <th>Actions</th>
+                </tr>
+                {% for sortie in mainform.sorties %}
+                    <tr>
+                        <td>{{ serie.nom }}</td>
+                        <td>{{ serie.dateHeureDebut|date }}</td>
+                        <td>{{ serie.etat.dateLimiteInscription }}</td>
+                        <td>{{ serie.nbInscriptionsMax }}</td>
+                        <td>{{ serie.etat.id }}</td>
+                        <td>{{ serie.etat.libelle }}</td>
+                        <td>{{ serie.organisateur.id }}</td>
+                        <td>todo</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+
         <div class="container">
             {{ form_row(mainForm.create)}}
         </div>

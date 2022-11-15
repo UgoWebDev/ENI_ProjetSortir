@@ -69,22 +69,22 @@ class SortieRepository extends ServiceEntityRepository
 
         $queryBuilder = $this->createQueryBuilder('s');
 
-        $queryBuilder->leftJoin('s.inclus', 'inscrits');
-        $queryBuilder->leftJoin('inscrits.estInscrit', 'participent');
-        $queryBuilder->leftJoin('s.siteOrganisateur', 'site');
-        $queryBuilder->leftJoin('s.organisateur', 'orga');
-        $queryBuilder->leftJoin('s.etat', 'eta');
+//        $queryBuilder->leftJoin('s.inclus', 'i');
+//        $queryBuilder->leftJoin('i.estInscrit', 'p');
+//        $queryBuilder->leftJoin('s.siteOrganisateur', 'si');
+//        $queryBuilder->leftJoin('s.organisateur', 'o');
+//        $queryBuilder->leftJoin('s.etat', 'eta');
 
-        $queryBuilder->andWhere('site = $options["campus"]');
-        $queryBuilder->andWhere('s.nom like $options["searchName"]');
-        $queryBuilder->andWhere('s.dateHeureDebut <= $options["dateFin"]');
-        $queryBuilder->andWhere('s.dateHeureDebut >= $options["dateDebut"]');
-        if ($options["isPassed"]) {
-            $queryBuilder->andWhere('eta.libelle = "Passée');
-        }
+//        $queryBuilder->andWhere('si.id = :options["campus"]');
+//        $queryBuilder->andWhere('s.nom like :options["searchName"]');
+//        $queryBuilder->andWhere('s.dateHeureDebut <= :options["dateFin"]');
+//        $queryBuilder->andWhere('s.dateHeureDebut >= :options["dateDebut"]');
+//        if ($options["isPassed"]) {
+//            $queryBuilder->andWhere('e.libelle = "Passée');
+//        }
         $queryBuilder->addOrderBy('s.dateHeureDebut','ASC');
         $query = $queryBuilder->getQuery();
 
-        return $query;
+        return $query->getResult();
     }
 }

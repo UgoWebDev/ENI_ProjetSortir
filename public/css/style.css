@@ -53,24 +53,59 @@ main {
     margin: 0 1rem;
 }
 
-#registration_form, form {
-    margin: 0 0 0 5rem;
-    height: 300px;
-    width:  90%;
+#registration_form, #main, form {
+    margin: 0 0 0 2rem;
+    height: 500px;
+    width: 90%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
 }
 
 #registration_form_estRattacheA {
-    margin: 0 0 0 1rem;
+    margin: 0 0 0 0.5rem;
 }
 
 input[type=text], input[type=number], input[type=password]{
     border-bottom: 2px solid var(--green);
     width: 66%;
 }
+.container {
+    height: 200px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
 
+.lieu{
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+.date{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 200px;
+    height: 100%;
+}
+.col{
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+.search{
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .btn{
     border:none;
@@ -85,4 +120,9 @@ input[type=text], input[type=number], input[type=password]{
 }
 .btn-link:active{
     color:#FF0000;
+}
+
+footer{
+    margin-top: 10rem;
+    text-align: center;
 }

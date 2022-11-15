@@ -2,11 +2,30 @@
 
 {% block title %}{{ parent () }} | Accueil{% endblock %}
 
+
 {% block body %}
     <div>
         {{ form_start(mainForm) }}
+        <div class="container">
+            <div class="lieu">
+                {{ form_row(mainForm.siteOrganisateur)}}
+                {{ form_row(mainForm.searchName)}}
+                    <div class="date">
+                        {{ form_row(mainForm.dateDebut)}}
+                        {{ form_row(mainForm.dateFin)}}
+                    </div>
+            </div>
+            <div class="col">
+                {{ form_row(mainForm.isOrganisateur)}}
+                {{ form_row(mainForm.isInscrit)}}
+                {{ form_row(mainForm.isNotInscrit)}}
+                {{ form_row(mainForm.isPassed)}}
+            </div>
+            <div class="search">
+                <button class="btn">Rechercher !</button>
+            </div>
+        </div>
 
-        {{ form_widget(mainForm) }}
         <button class="btn">Create !</button>
         {{ form_end(mainForm) }}
     </div>

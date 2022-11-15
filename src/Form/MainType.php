@@ -32,7 +32,7 @@ class MainType extends AbstractType
             ->add('dateFin', DateType::class, [
                 'html5' => true,
                 'widget' => 'single_text',
-                'label' => 'et',
+                'label' => 'et ',
             ])
             ->add('isOrganisateur', CheckboxType::class, [
                 'label'    => 'Sorties dont je suis l\'organisateur',

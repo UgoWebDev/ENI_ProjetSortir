@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Sortie;
 use App\Form\CreateExitType;
+use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,8 +30,8 @@ class SortieController extends AbstractController
             $entityManager->persist($sortie);
             $entityManager->flush();
 
-            $this->addFlash('success', 'La sortie est bien ajouté!');
-            return $this->redirectToRoute('accueil');
+            $this->addFlash('success', 'La sortie est bien publié!');
+            return $this->redirectToRoute('main_home');
         }
 
         return $this->render('sortie/create.html.twig', [
@@ -39,16 +40,24 @@ class SortieController extends AbstractController
     }
 
 
-    #[Route('/', name: 'details')]
-    public function details($id): Response
+    #[Route('/details/{id}', name: 'details')]
+    public function details(int $id, SortieRepository $sortieRepository): Response
     {
-        return $this->render('sortie/details.html.twig');
+        $sortie = $sortieRepository->find($id);
+
+        if(!$sortie){
+            throw $this->createNotFoundException('La sortie que vous souhaitez afficher n\'hésiste pas!');
+        }
+
+        return $this->render('sortie/details.html.twig', [
+            'sortie' => $sortie,
+        ]);
     }
 
 
-    #[Route('/', name: 'modif')]
-    public function modif(): Response
+    #[Route('/update', name: 'update')]
+    public function update(): Response
     {
-        return $this->render('sortie/modif.html.twig');
+        return $this->render('sortie/update.html.twig');
     }
 }

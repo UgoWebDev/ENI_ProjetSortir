@@ -9,8 +9,31 @@
         {{ form_widget(sortieForm) }}
 
         <button>Enregistrer</button>
+        <button>Publier la sortie</button>
         <button>Annuler</button>
 
         {{ form_end(sortieForm) }}
     </div>
+
+    <script>
+        let $ville = $('#sortie_ville');
+
+        $ville.change(function() {
+            let $form = $(this).closest('form');
+
+            let data = {};
+            data[$ville.attr('nom')] = $ville.val();
+
+            $.ajax({
+                url : $form.attr('action'),
+                type: $form.attr('method'),
+                data : data,
+                complete: function(html) {
+                    $('sortie_lieu').replaceWith(
+                        $(html.responseText).find('#sortie_lieu')
+                    );
+                }
+            });
+        });
+    </script>
 {% endblock %}

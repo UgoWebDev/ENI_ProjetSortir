@@ -64,7 +64,7 @@ class SortieRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-    public function getSorties(array $options): array
+    public function getSorties(array $options)
     {
 
         $queryBuilder = $this->createQueryBuilder('s');

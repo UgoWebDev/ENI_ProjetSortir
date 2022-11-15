@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * @extends ServiceEntityRepository<Sortie>
@@ -63,4 +64,27 @@ class SortieRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function getSorties(array $options): array
+    {
+
+        $queryBuilder = $this->createQueryBuilder('s');
+
+        $queryBuilder->leftJoin('s.inclus', 'inscrits');
+        $queryBuilder->leftJoin('inscrits.estInscrit', 'participent');
+        $queryBuilder->leftJoin('s.siteOrganisateur', 'site');
+        $queryBuilder->leftJoin('s.organisateur', 'orga');
+        $queryBuilder->leftJoin('s.etat', 'eta');
+
+        $queryBuilder->andWhere('site = $options["campus"]');
+        $queryBuilder->andWhere('s.nom like $options["searchName"]');
+        $queryBuilder->andWhere('s.dateHeureDebut <= $options["dateFin"]');
+        $queryBuilder->andWhere('s.dateHeureDebut >= $options["dateDebut"]');
+        if ($options["isPassed"]) {
+            $queryBuilder->andWhere('eta.libelle = "Passée');
+        }
+        $queryBuilder->addOrderBy('s.dateHeureDebut','ASC');
+        $query = $queryBuilder->getQuery();
+
+        return $query;
+    }
 }

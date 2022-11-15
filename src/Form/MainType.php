@@ -23,28 +23,35 @@ class MainType extends AbstractType
             ])
             ->add('searchName', TextType::class, [
                 'label' => 'Le nom de la sortie contient : ',
+                'required' => false,
             ])
             ->add('dateDebut', DateType::class, [
                 'html5' => true,
                 'widget' => 'single_text',
-                'label' => 'Entre',
+                'label' => 'Entre ',
+                'required' => false,
             ])
             ->add('dateFin', DateType::class, [
                 'html5' => true,
                 'widget' => 'single_text',
                 'label' => 'et ',
+                'required' => false,
             ])
             ->add('isOrganisateur', CheckboxType::class, [
                 'label'    => 'Sorties dont je suis l\'organisateur',
+                'required' => false,
             ])
             ->add('isInscrit', CheckboxType::class, [
                 'label'    => 'Sorties auxquelles je suis inscrit',
+                'required' => false,
             ])
             ->add('isNotInscrit', CheckboxType::class, [
                 'label'    => 'Sorties auxquelles je ne suis inscrit',
+                'required' => false,
             ])
             ->add('isPassed', CheckboxType::class, [
                 'label'    => 'Sorties passées',
+                'required' => false,
             ]);
 
     }

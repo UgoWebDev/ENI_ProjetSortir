@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Sortie;
-use App\Form\CreateExitType;
+use App\Form\SortieType;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,7 +22,7 @@ class SortieController extends AbstractController
     {
         $sortie = new Sortie();
 
-        $sortieForm = $this->createForm(CreateExitType::class, $sortie);
+        $sortieForm = $this->createForm(SortieType::class, $sortie);
 
         $sortieForm->handleRequest($request);
 
@@ -33,14 +33,15 @@ class SortieController extends AbstractController
             $this->addFlash('success', 'La sortie est bien publié!');
             return $this->redirectToRoute('main_home');
         }
-
+    dump($sortie);
         return $this->render('sortie/create.html.twig', [
             'sortieForm' => $sortieForm->createView(),
+            'sortie' => $sortie,
         ]);
     }
 
 
-    #[Route('/details/{id}', name: 'details')]
+    #[Route('/details/{id}', name: 'details', requirements: ['page' => '\d+'])]
     public function details(int $id, SortieRepository $sortieRepository): Response
     {
         $sortie = $sortieRepository->find($id);
@@ -60,4 +61,12 @@ class SortieController extends AbstractController
     {
         return $this->render('sortie/update.html.twig');
     }
+
+    #[Route('/register/{id}', name: 'register', requirements: ['page' => '\d+'])]
+    public function register($id): Response
+    {
+        return $this->render('sortie/update.html.twig');
+    }
+
+
 }

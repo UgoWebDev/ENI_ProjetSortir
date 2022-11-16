@@ -13,16 +13,26 @@
         <button>Annuler</button>
 
         {{ form_end(sortieForm) }}
+
+        {% if sortie.lieu != null  %}
+            <p>Rue : {{ sortie.lieu.rue }}</p>
+            <p>Code postal : {{ sortie.lieu.ville.codePostal }}</p>
+            <p>Latitude : {{ sortie.lieu.latitude }}</p>
+            <p>Longitude : {{ sortie.lieu.longitude }}</p>
+        {% endif %}
+
+
     </div>
 
     <script>
         let $ville = $('#sortie_ville');
-
+     console.log($ville);
         $ville.change(function() {
+            alert('passe');
             let $form = $(this).closest('form');
 
             let data = {};
-            data[$ville.attr('nom')] = $ville.val();
+            data[$ville.attr('name')] = $ville.val();
 
             $.ajax({
                 url : $form.attr('action'),

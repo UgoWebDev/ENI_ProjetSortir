@@ -38,15 +38,15 @@
                     <th>Organisateur</th>
                     <th>Actions</th>
                 </tr>
-                {% for sortie in mainform.sorties %}
+                {% for sortie in mainForm.sorties %}
                     <tr>
-                        <td>{{ serie.nom }}</td>
-                        <td>{{ serie.dateHeureDebut|date }}</td>
-                        <td>{{ serie.etat.dateLimiteInscription }}</td>
-                        <td>{{ serie.nbInscriptionsMax }}</td>
-                        <td>{{ serie.etat.id }}</td>
-                        <td>{{ serie.etat.libelle }}</td>
-                        <td>{{ serie.organisateur.id }}</td>
+                        <td>{{ sortie[1] }}</td>
+                        <td>{{ sortie.dateHeureDebut|date }}</td>
+                        <td>{{ sortie.etat.dateLimiteInscription }}</td>
+                        <td>{{ sortie.nbInscriptionsMax }}</td>
+                        <td>{{ sortie.etat.id }}</td>
+                        <td>{{ sortie.etat.libelle }}</td>
+                        <td>{{ sortie.organisateur.id }}</td>
                         <td>todo</td>
                     </tr>
                 {% endfor %}

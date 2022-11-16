@@ -3,9 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Campus;
+use Doctrine\DBAL\Types\ArrayType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -59,6 +61,10 @@ class MainType extends AbstractType
             ])
             ->add('create', SubmitType::class, [
                 'label' => 'Créer une sortie !'
+            ])
+            ->add('sorties',CollectionType::class,[
+                'required' => false,
+                'mapped' => false,
             ])
         ;
 

@@ -62,10 +62,6 @@ class MainType extends AbstractType
             ->add('create', SubmitType::class, [
                 'label' => 'Créer une sortie !'
             ])
-            ->add('sorties',CollectionType::class,[
-                'required' => false,
-                'mapped' => false,
-            ])
         ;
 
     }

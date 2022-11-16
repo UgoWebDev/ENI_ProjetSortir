@@ -29,7 +29,7 @@ class MainController extends AbstractController
             $searchOptions['isInscrit'] = true;
             $searchOptions['isNotInscrit'] = true;
             $searchOptions['isPassed'] = false;
-            $searchOptions['sorties'] = $sortieRepository -> getSorties($searchOptions);
+            $sorties = $sortieRepository -> getSorties($searchOptions);
 
 
         dump($searchOptions);
@@ -47,7 +47,7 @@ class MainController extends AbstractController
                 $searchOptions['isInscrit'] = $mainForm->get('isInscrit')->getData();
                 $searchOptions['isNotInscrit'] = $mainForm->get('isNotInscrit')->getData();
                 $searchOptions['isPassed'] = $mainForm->get('isPassed')->getData();
-                $searchOptions['sorties'] = $sortieRepository -> getSorties($searchOptions);
+                $sorties = $sortieRepository -> getSorties($searchOptions);
             }
             if ($mainForm->getClickedButton() && 'create' === $mainForm->getClickedButton()->getName()) {
                 return $this->redirectToRoute('sortie_create');
@@ -58,7 +58,8 @@ class MainController extends AbstractController
         }
 
         return $this->render('main/accueil.html.twig', [
-            'mainForm' => $mainForm->createView()
+            'mainForm' => $mainForm->createView(),
+            'mesSorties' => $sorties,
         ]);
     }
 }

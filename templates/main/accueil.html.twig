@@ -38,15 +38,20 @@
                     <th>Organisateur</th>
                     <th>Actions</th>
                 </tr>
-                {% for sortie in mainForm.sorties %}
+                {% for sortie in mesSorties %}
                     <tr>
-                        <td>{{ sortie[1] }}</td>
+                        <td>{{ sortie.nom }}</td>
                         <td>{{ sortie.dateHeureDebut|date }}</td>
-                        <td>{{ sortie.etat.dateLimiteInscription }}</td>
-                        <td>{{ sortie.nbInscriptionsMax }}</td>
-                        <td>{{ sortie.etat.id }}</td>
-                        <td>{{ sortie.etat.libelle }}</td>
-                        <td>{{ sortie.organisateur.id }}</td>
+{#                        <td>{{ sortie.etat.dateLimiteInscription|date }}</td>#}
+                        <td>limite inscription</td>
+                        <td>5/10</td>
+                        <td>X</td>
+                        <td>ouvert</td>
+                        <td>Ugo</td>
+{#                        <td>{{ sortie.nbInscriptionsMax }}</td>#}
+{#                        <td>{{ sortie.etat.id }}</td>#}
+{#                        <td>{{ sortie.etat.libelle }}</td>#}
+{#                        <td>{{ sortie.organisateur.id }}</td>#}
                         <td>todo</td>
                     </tr>
                 {% endfor %}

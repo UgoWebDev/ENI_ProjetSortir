@@ -107,7 +107,7 @@ input[type=text], input[type=number], input[type=password]{
     align-items: center;
 }
 
-.btn-lg, #main_search, #main_create{
+.btn, .btn-lg, #main_search, #main_create{
     border:none;
     outline:none;
     background:none;
@@ -136,6 +136,23 @@ footer{
     margin-bottom: 5rem;
 }
 
-td {
+.tab_sorties thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 8px 16px;
     border-bottom: lightgray solid 1px;
+}
+
+th {
+    background:#eee;
 }

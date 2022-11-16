@@ -28,7 +28,7 @@
         </div>
         <div class="tab_sorties">
             <table>
-                <tr>
+                <thead>
                     <th>Nom de la sortie</th>
                     <th>Date de la sortie</th>
                     <th>Clôture</th>
@@ -37,7 +37,7 @@
                     <th>Inscrit</th>
                     <th>Organisateur</th>
                     <th>Actions</th>
-                </tr>
+                </thead>
                 {% for sortie in mesSorties %}
                     <tr>
                         <td>{{ sortie.nom }}</td>

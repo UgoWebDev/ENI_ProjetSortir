@@ -5,18 +5,18 @@
     <ul>
         {% if is_granted("ROLE_ADMIN") %}
             <li>
-                <a href="{{ path('app_register' )}}" title="villes">Villes</a>
-                <a href="{{ path('app_register')}}" title="Campus">Campus</a>
+                <a href="{{ path('profile_register' )}}" title="villes">Villes</a>
+                <a href="{{ path('profile_register')}}" title="Campus">Campus</a>
             </li>
         {% endif %}
         <li>
             <a href="{{ path('main_home' )}}" title="Accueil">Accueil</a>
-            <a href="{{ path('app_register')}}" title="profil">Mon profil</a>
+            <a href="{{ path('profile_update')}}" title="profil">Mon profil</a>
             {% if app.user %}
                 <a href="{{ path('app_logout')}}" title="déconnexion">Déconnexion</a>
             {% else %}
                 <a href="{{ path('app_login')}}" title="se connecter">Connexion</a>
-                <a href="{{ path('app_register')}}" title="s'inscrire">S'inscrire</a>
+                <a href="{{ path('profile_register')}}" title="s'inscrire">S'inscrire</a>
             {% endif %}
 
         </li>

@@ -28,7 +28,7 @@
         let $ville = $('#sortie_ville');
      console.log($ville);
         $ville.change(function() {
-            alert('passe');
+
             let $form = $(this).closest('form');
 
             let data = {};
@@ -38,11 +38,13 @@
                 url : $form.attr('action'),
                 type: $form.attr('method'),
                 data : data,
+                alert('passe');
                 complete: function(html) {
                     $('sortie_lieu').replaceWith(
                         $(html.responseText).find('#sortie_lieu')
                     );
                 }
+
             });
         });
     </script>

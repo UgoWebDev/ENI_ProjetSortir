@@ -20,16 +20,14 @@ class Inscription
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?DateTimeInterface $dateInscription = null;
 
-    #[ORM\OneToMany(mappedBy: 'estInscrit', targetEntity: Participant::class)]
-    private Collection $participants;
+    #[ORM\ManyToOne(inversedBy: 'inscriptions')]
+    private ?sortie $inclus = null;
 
-    #[ORM\OneToMany(mappedBy: 'inclus', targetEntity: Sortie::class)]
-    private Collection $sorties;
+    #[ORM\ManyToOne(inversedBy: 'inscriptions')]
+    private ?participant $estInscrit = null;
 
     public function __construct()
     {
-        $this->participants = new ArrayCollection();
-        $this->sorties = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -49,62 +47,26 @@ class Inscription
         return $this;
     }
 
-    /**
-     * @return Collection<int, Participant>
-     */
-    public function getParticipants(): Collection
+    public function getInclus(): ?sortie
     {
-        return $this->participants;
+        return $this->inclus;
     }
 
-    public function addParticipant(Participant $participant): self
+    public function setInclus(?sortie $inclus): self
     {
-        if (!$this->participants->contains($participant)) {
-            $this->participants->add($participant);
-            $participant->setEstInscrit($this);
-        }
+        $this->inclus = $inclus;
 
         return $this;
     }
 
-    public function removeParticipant(Participant $participant): self
+    public function getEstInscrit(): ?participant
     {
-        if ($this->participants->removeElement($participant)) {
-            // set the owning side to null (unless already changed)
-            if ($participant->getEstInscrit() === $this) {
-                $participant->setEstInscrit(null);
-            }
-        }
-
-        return $this;
+        return $this->estInscrit;
     }
 
-    /**
-     * @return Collection<int, Sortie>
-     */
-    public function getSorties(): Collection
+    public function setEstInscrit(?participant $estInscrit): self
     {
-        return $this->sorties;
-    }
-
-    public function addSorty(Sortie $sorty): self
-    {
-        if (!$this->sorties->contains($sorty)) {
-            $this->sorties->add($sorty);
-            $sorty->setInclus($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSorty(Sortie $sorty): self
-    {
-        if ($this->sorties->removeElement($sorty)) {
-            // set the owning side to null (unless already changed)
-            if ($sorty->getInclus() === $this) {
-                $sorty->setInclus(null);
-            }
-        }
+        $this->estInscrit = $estInscrit;
 
         return $this;
     }

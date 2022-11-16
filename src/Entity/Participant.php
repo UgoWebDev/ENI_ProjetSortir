@@ -50,18 +50,19 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinColumn(nullable: false)]
     private ?Campus $estRattacheA = null;
 
-    #[ORM\ManyToOne(inversedBy: 'participants')]
-    private ?Inscription $estInscrit = null;
-
     #[ORM\OneToMany(mappedBy: 'organisateur', targetEntity: Sortie::class)]
     private Collection $sorties;
 
     #[ORM\Column(length: 30)]
     private ?string $pseudo = null;
 
+    #[ORM\OneToMany(mappedBy: 'estInscrit', targetEntity: Inscription::class)]
+    private Collection $inscriptions;
+
     public function __construct()
     {
         $this->sorties = new ArrayCollection();
+        $this->inscriptions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -206,18 +207,6 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getEstInscrit(): ?Inscription
-    {
-        return $this->estInscrit;
-    }
-
-    public function setEstInscrit(?Inscription $estInscrit): self
-    {
-        $this->estInscrit = $estInscrit;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Sortie>
      */
@@ -256,6 +245,36 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPseudo(string $pseudo): self
     {
         $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Inscription>
+     */
+    public function getInscriptions(): Collection
+    {
+        return $this->inscriptions;
+    }
+
+    public function addInscription(Inscription $inscription): self
+    {
+        if (!$this->inscriptions->contains($inscription)) {
+            $this->inscriptions->add($inscription);
+            $inscription->setEstInscrit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInscription(Inscription $inscription): self
+    {
+        if ($this->inscriptions->removeElement($inscription)) {
+            // set the owning side to null (unless already changed)
+            if ($inscription->getEstInscrit() === $this) {
+                $inscription->setEstInscrit(null);
+            }
+        }
 
         return $this;
     }

@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\SortieRepository;
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -46,11 +48,16 @@ class Sortie
     private ?Participant $organisateur = null;
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]
-    private ?Inscription $inclus = null;
-
-    #[ORM\ManyToOne(inversedBy: 'sorties')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Etat $etat = null;
+
+    #[ORM\OneToMany(mappedBy: 'inclus', targetEntity: Inscription::class)]
+    private Collection $inscriptions;
+
+    public function __construct()
+    {
+        $this->inscriptions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -165,18 +172,6 @@ class Sortie
         return $this;
     }
 
-    public function getInclus(): ?Inscription
-    {
-        return $this->inclus;
-    }
-
-    public function setInclus(?Inscription $inclus): self
-    {
-        $this->inclus = $inclus;
-
-        return $this;
-    }
-
     public function getEtat(): ?Etat
     {
         return $this->etat;
@@ -185,6 +180,36 @@ class Sortie
     public function setEtat(?Etat $etat): self
     {
         $this->etat = $etat;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Inscription>
+     */
+    public function getInscriptions(): Collection
+    {
+        return $this->inscriptions;
+    }
+
+    public function addInscription(Inscription $inscription): self
+    {
+        if (!$this->inscriptions->contains($inscription)) {
+            $this->inscriptions->add($inscription);
+            $inscription->setInclus($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInscription(Inscription $inscription): self
+    {
+        if ($this->inscriptions->removeElement($inscription)) {
+            // set the owning side to null (unless already changed)
+            if ($inscription->getInclus() === $this) {
+                $inscription->setInclus(null);
+            }
+        }
 
         return $this;
     }

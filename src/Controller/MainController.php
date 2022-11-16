@@ -31,13 +31,15 @@ class MainController extends AbstractController
             $searchOptions['isPassed'] = false;
             $sorties = $sortieRepository -> getSorties($searchOptions);
 
-
         dump($searchOptions);
+        dump($sorties);
 
         $mainForm = $this->createForm(MainType::class, $searchOptions);
         $mainForm->handleRequest($request);
 
         if($mainForm->isSubmitted() && $mainForm->isValid()) {
+            dump($searchOptions);
+            dump($sorties);
             if ($mainForm->getClickedButton() && 'search' === $mainForm->getClickedButton()->getName()) {
                 $searchOptions['campus'] = $mainForm->get('siteOrganisateur')->getData()->getID();
                 $searchOptions['searchName'] = $mainForm->get('searchName')->getData();
@@ -48,12 +50,15 @@ class MainController extends AbstractController
                 $searchOptions['isNotInscrit'] = $mainForm->get('isNotInscrit')->getData();
                 $searchOptions['isPassed'] = $mainForm->get('isPassed')->getData();
                 $sorties = $sortieRepository -> getSorties($searchOptions);
+                dump($searchOptions);
+                dump($sorties);
             }
             if ($mainForm->getClickedButton() && 'create' === $mainForm->getClickedButton()->getName()) {
                 return $this->redirectToRoute('sortie_create');
             }
 
             dump($searchOptions);
+            dump($sorties);
 
         }
 

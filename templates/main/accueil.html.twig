@@ -41,16 +41,14 @@
                 {% for sortie in mesSorties %}
                     <tr>
                         <td>{{ sortie.nom }}</td>
-                        <td>{{ sortie.dateHeureDebut|date }}</td>
-{#                        <td>{{ sortie.etat.dateLimiteInscription|date }}</td>#}
-                        <td>limite inscription</td>
-                        <td>5/10</td>
+                        <td>{{ sortie.dateHeureDebut|date("d/m/Y h:i")  }}</td>
+                        <td>{{ sortie.dateLimiteInscription|date("d/m/Y") }}</td>
+                        <td>{{ sortie.nbInscriptionsMax }}</td>
+                        <td>Ouvert</td>
                         <td>X</td>
-                        <td>ouvert</td>
                         <td>Ugo</td>
-{#                        <td>{{ sortie.nbInscriptionsMax }}</td>#}
 {#                        <td>{{ sortie.etat.id }}</td>#}
-{#                        <td>{{ sortie.etat.libelle }}</td>#}
+{#                        <td>{{ sortie.inscrit }}</td>#}
 {#                        <td>{{ sortie.organisateur.id }}</td>#}
                         <td>todo</td>
                     </tr>

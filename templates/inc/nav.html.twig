@@ -12,7 +12,13 @@
         <li>
             <a href="{{ path('main_home' )}}" title="Accueil">Accueil</a>
             <a href="{{ path('app_register')}}" title="profil">Mon profil</a>
-            <a href="{{ path('app_logout')}}" title="déconnexion">Déconnexion</a>
+            {% if app.user %}
+                <a href="{{ path('app_logout')}}" title="déconnexion">Déconnexion</a>
+            {% else %}
+                <a href="{{ path('app_login')}}" title="se connecter">Connexion</a>
+                <a href="{{ path('app_register')}}" title="s'inscrire">S'inscrire</a>
+            {% endif %}
+
         </li>
     </ul>
 </nav>

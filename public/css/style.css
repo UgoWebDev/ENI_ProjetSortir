@@ -126,3 +126,16 @@ footer{
     margin-top: 10rem;
     text-align: center;
 }
+
+.tab_sorties {
+    min-height: 400px;
+    overflow: auto;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5rem;
+}
+
+td {
+    border-bottom: lightgray solid 1px;
+}

@@ -68,7 +68,7 @@ class SortieRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('s');
 
-//        $queryBuilder->leftJoin('s.inclus', 'i');
+        $queryBuilder->leftJoin('s.inscriptions', 'i');
 //        $queryBuilder->leftJoin('i.estInscrit', 'p');
 //        $queryBuilder->leftJoin('s.siteOrganisateur', 'si');
 //        $queryBuilder->leftJoin('s.organisateur', 'o');
@@ -95,10 +95,17 @@ class SortieRepository extends ServiceEntityRepository
            $queryBuilder->andWhere('s.organisateur = :id' );
            $queryBuilder->setParameter('id',$options["user"])    ;
         }
-//        if ($options["isInscrit"]) {
-//            $queryBuilder->andWhere('s.organisateur = :id' );
-//            $queryBuilder->setParameter('id',$options["user"])    ;
-//        }
+        if (!$options["isInscrit"] || !$options["isNotInscrit"]) {
+            if ($options["isInscrit"]) {
+                $queryBuilder->andWhere('i.estInscrit = :ido');
+                $queryBuilder->setParameter('ido', $options["user"]);
+            }
+            if ($options["isNotInscrit"]) {
+                $queryBuilder->andWhere('i.estInscrit != :idn');
+                $queryBuilder->setParameter('idn', $options["user"]);
+            }
+        }
+
         $queryBuilder->addOrderBy('s.dateHeureDebut','ASC');
         $query = $queryBuilder->getQuery();
         dump($query->getDQL());

@@ -1,0 +1,22 @@
+{% extends '/base.html.twig' %}
+
+{% block body %}
+
+    {% for defaut in defauts %}
+        {{ defaut.id }}
+        {{ defaut.nom }}
+        {{ defaut.nbInscriptionsMax }}
+        {{ defaut.inscriptions|length }}
+        {% for inscrit in defaut.inscriptions %}
+            <br />
+            {{ inscrit.dateInscription|date }}
+            {{ inscrit.estInscrit.nom }}
+        {% endfor %}
+        <br /><br />
+    {% endfor %}
+{% endblock %}
+
+{% block title %}
+ pour teste uniquement
+{% endblock %}
+

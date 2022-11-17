@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Ville;
 use App\Form\MainType;
 use App\Repository\SortieRepository;
+use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,6 +34,7 @@ class MainController extends AbstractController
             $sorties = $sortieRepository -> getSorties($searchOptions);
 
         dump($searchOptions);
+        dump($sorties[0]);
         dump($sorties);
 
         $mainForm = $this->createForm(MainType::class, $searchOptions);
@@ -51,7 +54,9 @@ class MainController extends AbstractController
                 $searchOptions['isPassed'] = $mainForm->get('isPassed')->getData();
                 $sorties = $sortieRepository -> getSorties($searchOptions);
                 dump($searchOptions);
+                dump($sorties[0]);
                 dump($sorties);
+
             }
             if ($mainForm->getClickedButton() && 'create' === $mainForm->getClickedButton()->getName()) {
                 return $this->redirectToRoute('sortie_create');
@@ -65,6 +70,37 @@ class MainController extends AbstractController
         return $this->render('main/accueil.html.twig', [
             'mainForm' => $mainForm->createView(),
             'mesSorties' => $sorties,
+        ]);
+    }
+
+    #[Route('/ville', name: 'ville')]
+    public function ville(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SortieRepository $sortieRepository
+    ): Response
+    {
+        $sorties = $sortieRepository->findAll();
+//        dump($sorties);
+        $defauts = [];
+        $count = 0;
+        $count2 = 0;
+
+        foreach ($sorties as $sortie) {
+            $count++;
+            $nbInscrits =  sizeof( $sortie->getInscriptions());
+            $nbPlaces = $sortie->getNbInscriptionsMax() ;
+            if ($nbInscrits > $nbPlaces) {
+                $count2++;
+                $defauts[]=$sortie;
+            }
+        }
+        dump($defauts);
+        dump($count);
+        dump($count2);
+
+        return $this->render('main/ville.html.twig', [
+            'defauts' => $defauts,
         ]);
     }
 }

@@ -53,15 +53,53 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    #[Route('/display', name: 'display')]
-    public function display(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AppAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+
+
+
+    #[Route('/display/{id}', name: 'display')]
+    public function display(int $id): Response
     {
-        return null;
+        return $this->render('registration/display.html.twig',[
+        ]);
     }
 
     #[Route('/update', name: 'update')]
     public function update(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AppAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
-        return null;
+        $user = $this->getUser();
+
+        $updateform = $this->createForm(RegistrationFormType::class, $user);
+
+        $updateform->handleRequest($request);
+
+        if ($updateform->isSubmitted() && $updateform->isValid()) {
+            // encode the plain password
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $updateform->get('password')->getData()
+                )
+            );
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+            // do anything else you need here, like send an email
+
+            return $userAuthenticator->authenticateUser(
+                $user,
+                $authenticator,
+                $request
+            );
+        }
+
+        $this->addFlash(
+            'success',
+            'Vos modification ont bien etes enregistrees.'
+        );
+
+        return $this->render('registration/update.html.twig',[
+            'registrationForm' => $updateform->createView(),
+
+        ]);
     }
 }

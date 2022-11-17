@@ -11,7 +11,7 @@
         {% endif %}
         <li>
             <a href="{{ path('main_home' )}}" title="Accueil">Accueil</a>
-            <a href="{{ path('profile_registration_update')}}" title="profil">Mon profil</a>
+            <a href="{{ path('profile_update')}}" title="profil">Mon profil</a>
             {% if app.user %}
                 <a href="{{ path('app_logout')}}" title="déconnexion">Déconnexion ({{ app.user.pseudo }})</a>
             {% else %}

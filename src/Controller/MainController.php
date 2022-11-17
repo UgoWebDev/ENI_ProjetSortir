@@ -2,10 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Ville;
 use App\Form\MainType;
 use App\Repository\SortieRepository;
-use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,19 +20,18 @@ class MainController extends AbstractController
         SortieRepository $sortieRepository
     ): Response
     {
-
-            $searchOptions['campus'] = 1;
-            $searchOptions['searchName'] = '';
-            $searchOptions['dateDebut'] = null;
-            $searchOptions['dateFin'] = null;
-            $searchOptions['isOrganisateur'] = true;
-            $searchOptions['isInscrit'] = true;
-            $searchOptions['isNotInscrit'] = true;
-            $searchOptions['isPassed'] = false;
-            $sorties = $sortieRepository -> getSorties($searchOptions);
+        $searchOptions['user'] = $this->getUser();
+        $searchOptions['campus'] = 1;
+        $searchOptions['searchName'] = '';
+        $searchOptions['dateDebut'] = null;
+        $searchOptions['dateFin'] = null;
+        $searchOptions['isOrganisateur'] = true;
+        $searchOptions['isInscrit'] = true;
+        $searchOptions['isNotInscrit'] = true;
+        $searchOptions['isPassed'] = false;
+        $sorties = $sortieRepository -> getSorties($searchOptions);
 
         dump($searchOptions);
-        dump($sorties[0]);
         dump($sorties);
 
         $mainForm = $this->createForm(MainType::class, $searchOptions);
@@ -54,8 +51,6 @@ class MainController extends AbstractController
                 $searchOptions['isPassed'] = $mainForm->get('isPassed')->getData();
                 $sorties = $sortieRepository -> getSorties($searchOptions);
                 dump($searchOptions);
-                dump($sorties[0]);
-                dump($sorties);
 
             }
             if ($mainForm->getClickedButton() && 'create' === $mainForm->getClickedButton()->getName()) {
@@ -85,6 +80,8 @@ class MainController extends AbstractController
         $defauts = [];
         $count = 0;
         $count2 = 0;
+        $user = $this->getUser();
+        dump($user);
 
         foreach ($sorties as $sortie) {
             $count++;
@@ -95,7 +92,6 @@ class MainController extends AbstractController
                 $defauts[]=$sortie;
             }
         }
-        dump($defauts);
         dump($count);
         dump($count2);
 

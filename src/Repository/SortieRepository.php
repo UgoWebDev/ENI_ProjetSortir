@@ -66,7 +66,6 @@ class SortieRepository extends ServiceEntityRepository
 //    }
     public function getSorties(array $options)
     {
-
         $queryBuilder = $this->createQueryBuilder('s');
 
 //        $queryBuilder->leftJoin('s.inclus', 'i');
@@ -82,9 +81,13 @@ class SortieRepository extends ServiceEntityRepository
 //        if ($options["isPassed"]) {
 //            $queryBuilder->andWhere('e.libelle = "Passée');
 //        }
+        if ($options["isOrganisateur"]) {
+           $queryBuilder->andWhere('s.organisateur = :id' );
+           $queryBuilder->setParameter('id',$options["user"])    ;
+        }
         $queryBuilder->addOrderBy('s.dateHeureDebut','ASC');
         $query = $queryBuilder->getQuery();
-
+        dump($query->getDQL());
         return $query->getResult();
     }
 }

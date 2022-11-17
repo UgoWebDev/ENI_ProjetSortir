@@ -29,10 +29,11 @@ class MainController extends AbstractController
         $searchOptions['isInscrit'] = true;
         $searchOptions['isNotInscrit'] = true;
         $searchOptions['isPassed'] = false;
+        $searchOptions['etat'] = null;
         $sorties = $sortieRepository -> getSorties($searchOptions);
 
         dump($searchOptions);
-        dump($sorties);
+
 
         $mainForm = $this->createForm(MainType::class, $searchOptions);
         $mainForm->handleRequest($request);
@@ -41,10 +42,23 @@ class MainController extends AbstractController
             dump($searchOptions);
             dump($sorties);
             if ($mainForm->getClickedButton() && 'search' === $mainForm->getClickedButton()->getName()) {
+
+                $dateDebut = $mainForm->get('dateDebut')->getData();
+                $dateFin = $mainForm->get('dateFin')->getData();
+                if ($dateDebut != null && $dateFin != null){
+
+                    if ($dateDebut > $dateFin){
+                        $temp = $dateDebut;
+                        $dateDebut = $dateFin;
+                        $dateFin = $temp;
+
+                    }
+                }
+
                 $searchOptions['campus'] = $mainForm->get('siteOrganisateur')->getData()->getID();
-                $searchOptions['searchName'] = $mainForm->get('searchName')->getData();
-                $searchOptions['dateDebut'] = $mainForm->get('dateDebut')->getData();
-                $searchOptions['dateFin'] = $mainForm->get('dateFin')->getData();
+                $searchOptions['searchName'] =  "%".$mainForm->get('searchName')->getData()."%";
+                $searchOptions['dateDebut'] = $dateDebut;
+                $searchOptions['dateFin'] = $dateFin;
                 $searchOptions['isOrganisateur'] = $mainForm->get('isOrganisateur')->getData();
                 $searchOptions['isInscrit'] = $mainForm->get('isInscrit')->getData();
                 $searchOptions['isNotInscrit'] = $mainForm->get('isNotInscrit')->getData();
@@ -58,7 +72,7 @@ class MainController extends AbstractController
             }
 
             dump($searchOptions);
-            dump($sorties);
+
 
         }
 

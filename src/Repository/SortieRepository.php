@@ -75,16 +75,29 @@ class SortieRepository extends ServiceEntityRepository
 //        $queryBuilder->leftJoin('s.etat', 'eta');
 
 //        $queryBuilder->andWhere('si.id = :options["campus"]');
-//        $queryBuilder->andWhere('s.nom like :options["searchName"]');
-//        $queryBuilder->andWhere('s.dateHeureDebut <= :options["dateFin"]');
+        $queryBuilder->andWhere('s.nom like :rec');
+        $queryBuilder->setParameter('rec',$options["searchName"]);
+        if ($options["dateDebut"]) {
+            $queryBuilder->andWhere('s.dateHeureDebut >= :deb');
+            $queryBuilder->setParameter('deb', $options["dateDebut"]);
+        }
+        if ($options["dateFin"]) {
+            $queryBuilder->andWhere('s.dateHeureDebut <= :fin');
+            $queryBuilder->setParameter('fin', $options["dateFin"]);
+        }
 //        $queryBuilder->andWhere('s.dateHeureDebut >= :options["dateDebut"]');
 //        if ($options["isPassed"]) {
-//            $queryBuilder->andWhere('e.libelle = "Passée');
+//            $queryBuilder->andWhere('s.etat.id = :etat');
+//            $queryBuilder->setParameter('etat',5)    ;
 //        }
         if ($options["isOrganisateur"]) {
            $queryBuilder->andWhere('s.organisateur = :id' );
            $queryBuilder->setParameter('id',$options["user"])    ;
         }
+//        if ($options["isInscrit"]) {
+//            $queryBuilder->andWhere('s.organisateur = :id' );
+//            $queryBuilder->setParameter('id',$options["user"])    ;
+//        }
         $queryBuilder->addOrderBy('s.dateHeureDebut','ASC');
         $query = $queryBuilder->getQuery();
         dump($query->getDQL());

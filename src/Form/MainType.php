@@ -41,21 +41,26 @@ class MainType extends AbstractType
                 'required' => false,
             ])
             ->add('isOrganisateur', CheckboxType::class, [
-                'label'    => 'Sorties dont je suis l\'organisateur',
+                'label'    => 'Sorties dont je suis l\'organisateur ',
                 'required' => false,
             ])
             ->add('isInscrit', CheckboxType::class, [
-                'label'    => 'Sorties auxquelles je suis inscrit',
+                'label'    => 'Sorties auxquelles je suis inscrit ',
                 'required' => false,
             ])
             ->add('isNotInscrit', CheckboxType::class, [
-                'label'    => 'Sorties auxquelles je ne suis inscrit',
+                'label'    => 'Sorties auxquelles je ne suis inscrit ',
                 'required' => false,
             ])
             ->add('isPassed', CheckboxType::class, [
-                'label'    => 'Sorties passées',
+                'label'    => 'Est passée ',
                 'required' => false,
             ])
+//            ->add('etat', EntityType::class, [
+//                'class' => Etat::class,
+//                'choice_label' => 'libelle',
+//                'label' => '',
+//            ])
             ->add('search', SubmitType::class, [
                 'label' => 'Rechercher !'
             ])

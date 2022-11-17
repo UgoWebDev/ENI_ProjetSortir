@@ -26,7 +26,6 @@
 
     <script>
         let $ville = $('#sortie_ville');
-     console.log($ville);
         $ville.change(function() {
 
             let $form = $(this).closest('form');
@@ -36,15 +35,13 @@
 
             $.ajax({
                 url : $form.attr('action'),
-                type: $form.attr('method'),
+                type : $form.attr('method'),
                 data : data,
-                alert('passe');
                 complete: function(html) {
-                    $('sortie_lieu').replaceWith(
+                    $('#sortie_lieu').replaceWith(
                         $(html.responseText).find('#sortie_lieu')
                     );
                 }
-
             });
         });
     </script>

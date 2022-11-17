@@ -33,7 +33,7 @@ class SortieController extends AbstractController
             $this->addFlash('success', 'La sortie est bien publié!');
             return $this->redirectToRoute('main_home');
         }
-    dump($sortie);
+
         return $this->render('sortie/create.html.twig', [
             'sortieForm' => $sortieForm->createView(),
             'sortie' => $sortie,

@@ -19,6 +19,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+
 class SortieType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -59,13 +60,14 @@ class SortieType extends AbstractType
                 'mapped' => false,
             ]);
 
-        $formModifier = function (FormInterface $form, Ville $ville = null, Lieu $lieu = null) {
+        $formModifier = function (FormInterface $form, Ville $ville = null) {
             $lieux = null === $ville ? [] : $ville->getLieux();
+            dump($ville);
             dump($lieux);
-            $rues = null === $lieu ? [] : $lieu->getNom();
+            /*$rues = null === $lieu ? [] : $lieu->getNom();
             dump($rues);
             $codePostal = null === $ville ? [] : $ville->getCodePostal();
-            dump($codePostal);
+            dump($codePostal);*/
 
             $form->add('lieu', EntityType::class, [
                 'class' => Lieu::class,
@@ -82,17 +84,19 @@ class SortieType extends AbstractType
 
                 $data = $event->getData();
 
-                $formModifier($event->getForm(), $data->getNom());
+                $formModifier($event->getForm(), $data->getLieu());
             }
         );
+
+        dump($formModifier);
 
         $builder->get('ville')->addEventListener(
             FormEvents::POST_SUBMIT,
             function (FormEvent $event) use ($formModifier) {
                 $ville = $event->getForm()->getData();
-                $lieu = $event->getForm()->getData();
+                //$lieu = $event->getForm()->getData();
 
-                $formModifier($event->getForm()->getParent(), $ville, $lieu);
+                $formModifier($event->getForm()->getParent(), $ville);
             }
 
         );

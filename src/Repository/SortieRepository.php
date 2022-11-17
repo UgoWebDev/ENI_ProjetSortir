@@ -74,7 +74,8 @@ class SortieRepository extends ServiceEntityRepository
 //        $queryBuilder->leftJoin('s.organisateur', 'o');
 //        $queryBuilder->leftJoin('s.etat', 'eta');
 
-//        $queryBuilder->andWhere('si.id = :options["campus"]');
+        $queryBuilder->andWhere('s.siteOrganisateur = :camp');
+        $queryBuilder->setParameter('camp',$options["campus"]);
         $queryBuilder->andWhere('s.nom like :rec');
         $queryBuilder->setParameter('rec',$options["searchName"]);
         if ($options["dateDebut"]) {
@@ -85,11 +86,11 @@ class SortieRepository extends ServiceEntityRepository
             $queryBuilder->andWhere('s.dateHeureDebut <= :fin');
             $queryBuilder->setParameter('fin', $options["dateFin"]);
         }
-//        $queryBuilder->andWhere('s.dateHeureDebut >= :options["dateDebut"]');
-//        if ($options["isPassed"]) {
-//            $queryBuilder->andWhere('s.etat.id = :etat');
-//            $queryBuilder->setParameter('etat',5)    ;
-//        }
+
+        if ($options["isPassed"]) {
+            $queryBuilder->andWhere('s.etat = :etat');
+            $queryBuilder->setParameter('etat',5)    ;
+        }
         if ($options["isOrganisateur"]) {
            $queryBuilder->andWhere('s.organisateur = :id' );
            $queryBuilder->setParameter('id',$options["user"])    ;

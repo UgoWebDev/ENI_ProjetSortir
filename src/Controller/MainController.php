@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Participant;
 use App\Form\MainType;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,6 +21,10 @@ class MainController extends AbstractController
         SortieRepository $sortieRepository
     ): Response
     {
+
+        $campus = $this->getUser() ->getEstRattacheA() -> getNom();
+        dump($campus);
+
         $searchOptions['user'] = $this->getUser();
         $searchOptions['campus'] = 1;
         $searchOptions['searchName'] = '';

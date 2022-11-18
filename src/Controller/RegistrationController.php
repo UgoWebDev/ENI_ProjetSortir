@@ -60,10 +60,6 @@ class RegistrationController extends AbstractController
     #[Route('/display/{id}', name: 'display')]
     public function display(int $id,
                             Request $request,
-                            UserPasswordHasherInterface $userPasswordHasher,
-                            UserAuthenticatorInterface $userAuthenticator,
-                            AppAuthenticator $authenticator,
-                            EntityManagerInterface $entityManager,
                             ParticipantRepository $participantRepository
     ): Response
     {

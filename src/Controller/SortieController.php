@@ -75,6 +75,17 @@ class SortieController extends AbstractController
         return $this->render('sortie/update.html.twig');
     }
 
+    #[Route('/desist/{id}', name: 'desist', requirements: ['page' => '\d+'])]
+    public function desist($id): Response
+    {
+        return $this->render('sortie/desist.html.twig');
+    }
+
+    #[Route('/publish/{id}', name: 'publish', requirements: ['page' => '\d+'])]
+    public function publish($id): Response
+    {
+        return $this->render('sortie/publish.html.twig');
+    }
 
 
 }

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Participant;
 use App\Form\RegistrationFormType;
+use App\Repository\ParticipantRepository;
 use App\Security\AppAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -57,15 +58,23 @@ class RegistrationController extends AbstractController
 
 
     #[Route('/display/{id}', name: 'display')]
-    public function display(int $id, Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AppAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    public function display(int $id,
+                            Request $request,
+                            UserPasswordHasherInterface $userPasswordHasher,
+                            UserAuthenticatorInterface $userAuthenticator,
+                            AppAuthenticator $authenticator,
+                            EntityManagerInterface $entityManager,
+                            ParticipantRepository $participantRepository
+    ): Response
     {
-        $user = $this->getUser();
+        $user = $participantRepository->find($id);
 
         $displayform = $this->createForm(RegistrationFormType::class, $user);
 
         $displayform->handleRequest($request);
 
         return $this->render('registration/display.html.twig',[
+            'user' => $user,
         ]);
     }
 

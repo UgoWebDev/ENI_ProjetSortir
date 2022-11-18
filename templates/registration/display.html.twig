@@ -3,15 +3,15 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Profil de {{ app.user.nom }}</h1>
+    <h1>Profil de {{ user.nom }}</h1>
 
     <div class="container">
         <section>
             todo: img
-            <p>Prénom : {{ app.user.prenom }}</p>
-            <p>Nom : {{ app.user.nom }}</p>
-            <p>Telephone : {{ app.user.telephone }}</p>
-            <p>Email : {{ app.user.email }}</p>
+            <p>Prénom : {{ user.prenom }}</p>
+            <p>Nom : {{ user.nom }}</p>
+            <p>Telephone : {{ user.telephone }}</p>
+            <p>Email : {{ user.email }}</p>
         </section>
     </div>
 

@@ -57,8 +57,14 @@ class RegistrationController extends AbstractController
 
 
     #[Route('/display/{id}', name: 'display')]
-    public function display(int $id): Response
+    public function display(int $id, Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AppAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
+
+        $displayform = $this->createForm(RegistrationFormType::class, $user);
+
+        $displayform->handleRequest($request);
+
         return $this->render('registration/display.html.twig',[
         ]);
     }

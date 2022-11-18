@@ -3,11 +3,17 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Profil de {{ app.user }}</h1>
+    <h1>Profil de {{ app.user.nom }}</h1>
 
-    {{ form_start(registrationForm) }}
+    <div class="container">
+        <section>
+            todo: img
+            <p>Prénom : {{ app.user.prenom }}</p>
+            <p>Nom : {{ app.user.nom }}</p>
+            <p>Telephone : {{ app.user.telephone }}</p>
+            <p>Email : {{ app.user.email }}</p>
+        </section>
+    </div>
 
-    {{ form_widget((registrationForm))}}
 
-    {{ form_end(registrationForm) }}
 {% endblock %}

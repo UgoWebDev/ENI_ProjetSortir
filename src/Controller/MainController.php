@@ -59,7 +59,7 @@ class MainController extends AbstractController
                 }
 
                 $searchOptions['campus'] = $mainForm->get('siteOrganisateur')->getData()->getID();
-                $searchOptions['searchName'] =  "%".$mainForm->get('searchName')->getData()."%";
+                $searchOptions['searchName'] =  $mainForm->get('searchName')->getData();
                 $searchOptions['dateDebut'] = $dateDebut;
                 $searchOptions['dateFin'] = $dateFin;
                 $searchOptions['isOrganisateur'] = $mainForm->get('isOrganisateur')->getData();

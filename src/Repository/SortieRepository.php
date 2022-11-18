@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Sortie;
+use App\Entity\Participant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -69,16 +70,21 @@ class SortieRepository extends ServiceEntityRepository
         $queryBuilder = $this->createQueryBuilder('s');
 
         $queryBuilder->leftJoin('s.inscriptions', 'i');
-        $queryBuilder->leftJoin('i.estInscrit', 'p');
         $queryBuilder->leftJoin('s.siteOrganisateur', 'si');
         $queryBuilder->leftJoin('s.organisateur', 'o');
         $queryBuilder->leftJoin('s.etat', 'e');
         $queryBuilder->leftJoin('s.lieu', 'l');
 
+        $queryBuilder->addSelect('i');
+        $queryBuilder->addSelect('si');
+        $queryBuilder->addSelect('o');
+        $queryBuilder->addSelect('e');
+        $queryBuilder->addSelect('l');
+
         $queryBuilder->andWhere('s.siteOrganisateur = :camp');
         $queryBuilder->setParameter('camp',$options["campus"]);
         $queryBuilder->andWhere('s.nom like :rec');
-        $queryBuilder->setParameter('rec',$options["searchName"]);
+        $queryBuilder->setParameter('rec','%'.$options["searchName"].'%');
         if ($options["dateDebut"]) {
             $queryBuilder->andWhere('s.dateHeureDebut >= :deb');
             $queryBuilder->setParameter('deb', $options["dateDebut"]);

@@ -54,20 +54,40 @@
                                 {%  endif %}
                             {% endfor %}
                         </td>
-                        <td>{{ sortie.organisateur.email }}</td>
                         <td>
-                            <a href="{{ path('sortie_details',{'id': sortie.id}) }}"
-                               title="afficher le détail de la sortie">Afficher</a>
-                            <a href="{{ path('sortie_desist',{'id': sortie.id}) }}"
-                               title="annuler son inscription à la sortie">Se désister</a>
-                            <a href="{{ path('sortie_register',{'id': sortie.id}) }}"
-                               title="s'inscrire à la sortie">S'inscrire</a>
-                            <a href="{{ path('sortie_update',{'id': sortie.id}) }}"
-                               title="modifier la sortie">Modifier</a>
-                            <a href="{{ path('sortie_publish',{'id': sortie.id}) }}"
-                               title="publier la sortie">Publier</a>
-                            <a href="{{ path('sortie_delete',{'id': sortie.id}) }}"
-                               title="supprimer la sortie">Supprimer</a>
+                            <a href="{{ path('profile_display',{'id': sortie.organisateur.id}) }}"
+                               title="afficher le détail de l'organisateur">{{ sortie.organisateur.email }}</a>
+                        </td>
+                        <td>
+                            {% if tempInscrit %}
+                                {% if (sortie.etat.id == 2) or (sortie.etat.id == 3)  %}
+                                    <a href="{{ path('sortie_desist',{'id': sortie.id}) }}"
+                                       title="annuler son inscription à la sortie">Se désister</a>
+                                {% endif %}
+                            {% else %}
+                                {% if (sortie.etat.id == 2)  %}
+                                    <a href="{{ path('sortie_register',{'id': sortie.id}) }}"
+                                       title="s'inscrire à la sortie">S'inscrire</a>
+                                {% endif %}
+                            {% endif %}
+                            {% if app.user ==sortie.organisateur %}
+                                {% if (sortie.etat.id == 1)  %}
+                                    <a href="{{ path('sortie_update',{'id': sortie.id}) }}"
+                                       title="modifier la sortie">Modifier</a>
+                                    <a href="{{ path('sortie_publish',{'id': sortie.id}) }}"
+                                       title="publier la sortie">Publier</a>
+                                    <a href="{{ path('sortie_delete',{'id': sortie.id}) }}"
+                                       title="supprimer la sortie">Supprimer</a>
+                                {% endif %}
+                                {% if (sortie.etat.id == 2) or (sortie.etat.id == 3)  %}
+                                    <a href="{{ path('sortie_delete',{'id': sortie.id}) }}"
+                                       title="supprimer la sortie">Supprimer</a>
+                                {% endif %}
+                            {% endif %}
+                            {% if (sortie.etat.id != 1)  %}
+                                <a href="{{ path('sortie_details',{'id': sortie.id}) }}"
+                                   title="afficher le détail de la sortie">Afficher</a>
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}

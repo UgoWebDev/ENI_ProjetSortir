@@ -20,6 +20,7 @@ class SortieController extends AbstractController
     public function create(
         Request $request,
         EntityManagerInterface $entityManager,
+        SortieRepository $sortieRepository,
 
     ): Response
     {
@@ -33,14 +34,14 @@ class SortieController extends AbstractController
             $campus = $this->getUser() -> getEstRattacheA();
             $sortie -> setSiteOrganisateur($campus);
             $sortie -> setOrganisateur($this->getUser());
-
+            dump($sortie);
             $entityManager->persist($sortie);
             $entityManager->flush();
 
-            $this->addFlash('success', 'La sortie est bien publié!');
+            $this->addFlash('success', 'La sortie est bien oublié!');
             return $this->redirectToRoute('main_home');
         }
-
+    dump($sortieForm);
         return $this->render('sortie/create.html.twig', [
             'sortieForm' => $sortieForm->createView(),
             'sortie' => $sortie,
@@ -69,6 +70,9 @@ class SortieController extends AbstractController
         return $this->render('sortie/update.html.twig');
     }
 
+
+    //Patrick
+
     #[Route('/register/{id}', name: 'register', requirements: ['page' => '\d+'])]
     public function register($id): Response
     {
@@ -92,6 +96,8 @@ class SortieController extends AbstractController
     {
         return $this->render('sortie/delete.html.twig');
     }
+
+
 
 
 }

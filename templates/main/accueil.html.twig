@@ -46,15 +46,29 @@
                         <td>{{ sortie.inscriptions|length }}/{{  sortie.nbInscriptionsMax }}</td>
                         <td>{{ sortie.etat.libelle }}</td>
                         <td>
+                            {% set tempInscrit = false %}
                             {%  for inscrit in sortie.inscriptions %}
                                 {% if  app.user  ==  inscrit.estInscrit  %}
                                     X
+                                    {% set tempInscrit = true %}
                                 {%  endif %}
                             {% endfor %}
                         </td>
                         <td>{{ sortie.organisateur.email }}</td>
-{#                        <td>{{ sortie.inscrit }}</td>#}
-                        <td>todo</td>
+                        <td>
+                            <a href="{{ path('sortie_details',{'id': sortie.id}) }}"
+                               title="afficher le détail de la sortie">Afficher</a>
+                            <a href="{{ path('sortie_desist',{'id': sortie.id}) }}"
+                               title="annuler son inscription à la sortie">Se désister</a>
+                            <a href="{{ path('sortie_register',{'id': sortie.id}) }}"
+                               title="s'inscrire à la sortie">S'inscrire</a>
+                            <a href="{{ path('sortie_update',{'id': sortie.id}) }}"
+                               title="modifier la sortie">Modifier</a>
+                            <a href="{{ path('sortie_publish',{'id': sortie.id}) }}"
+                               title="publier la sortie">Publier</a>
+                            <a href="{{ path('sortie_delete',{'id': sortie.id}) }}"
+                               title="supprimer la sortie">Supprimer</a>
+                        </td>
                     </tr>
                 {% endfor %}
             </table>

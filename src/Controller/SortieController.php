@@ -87,5 +87,11 @@ class SortieController extends AbstractController
         return $this->render('sortie/publish.html.twig');
     }
 
+    #[Route('/delete/{id}', name: 'delete', requirements: ['page' => '\d+'])]
+    public function delete($id): Response
+    {
+        return $this->render('sortie/delete.html.twig');
+    }
+
 
 }

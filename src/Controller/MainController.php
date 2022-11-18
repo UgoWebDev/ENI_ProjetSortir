@@ -22,8 +22,8 @@ class MainController extends AbstractController
     ): Response
     {
 
-        $campus = $this->getUser() ->getEstRattacheA() -> getNom();
-        dump($campus);
+//        $campus = $this->getUser() ->getEstRattacheA() -> getNom();
+//        dump($campus);
 
         $searchOptions['user'] = $this->getUser();
         $searchOptions['campus'] = 1;

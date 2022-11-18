@@ -69,10 +69,11 @@ class SortieRepository extends ServiceEntityRepository
         $queryBuilder = $this->createQueryBuilder('s');
 
         $queryBuilder->leftJoin('s.inscriptions', 'i');
-//        $queryBuilder->leftJoin('i.estInscrit', 'p');
-//        $queryBuilder->leftJoin('s.siteOrganisateur', 'si');
-//        $queryBuilder->leftJoin('s.organisateur', 'o');
-//        $queryBuilder->leftJoin('s.etat', 'eta');
+        $queryBuilder->leftJoin('i.estInscrit', 'p');
+        $queryBuilder->leftJoin('s.siteOrganisateur', 'si');
+        $queryBuilder->leftJoin('s.organisateur', 'o');
+        $queryBuilder->leftJoin('s.etat', 'e');
+        $queryBuilder->leftJoin('s.lieu', 'l');
 
         $queryBuilder->andWhere('s.siteOrganisateur = :camp');
         $queryBuilder->setParameter('camp',$options["campus"]);

@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Sortie;
 use App\Form\SortieType;
+use App\Entity\Participant;
+use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,6 +20,7 @@ class SortieController extends AbstractController
     public function create(
         Request $request,
         EntityManagerInterface $entityManager,
+
     ): Response
     {
         $sortie = new Sortie();
@@ -27,6 +30,10 @@ class SortieController extends AbstractController
         $sortieForm->handleRequest($request);
 
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
+            $campus = $this->getUser() -> getEstRattacheA();
+            $sortie -> setSiteOrganisateur($campus);
+            $sortie -> setOrganisateur($this->getUser());
+
             $entityManager->persist($sortie);
             $entityManager->flush();
 
@@ -67,6 +74,7 @@ class SortieController extends AbstractController
     {
         return $this->render('sortie/update.html.twig');
     }
+
 
 
 }

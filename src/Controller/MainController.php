@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Participant;
 use App\Form\MainType;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -56,7 +55,6 @@ class MainController extends AbstractController
                         $temp = $dateDebut;
                         $dateDebut = $dateFin;
                         $dateFin = $temp;
-
                     }
                 }
 
@@ -80,6 +78,8 @@ class MainController extends AbstractController
 
 
         }
+
+        $mainForm = $this->createForm(MainType::class, $searchOptions);
 
         return $this->render('main/accueil.html.twig', [
             'mainForm' => $mainForm->createView(),

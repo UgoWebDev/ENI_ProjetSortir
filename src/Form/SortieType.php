@@ -59,8 +59,6 @@ class SortieType extends AbstractType
         $formModifier = function (FormInterface $form, Ville $ville = null, Lieu $lieu = null) {
             $lieux = null === $ville ? [] : $ville->getLieux();
             $codePostal = null === $ville ? [] : $ville->getCodePostal();
-            $rue = null === $lieu ? [] : $lieu->getRue();
-
 
             $form->add('lieu', EntityType::class, [
                 'class' => Lieu::class,

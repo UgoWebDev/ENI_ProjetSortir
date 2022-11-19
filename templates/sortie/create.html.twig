@@ -41,6 +41,9 @@
                     $('#sortie_lieu').replaceWith(
                         $(html.responseText).find('#sortie_lieu')
                     );
+                    $('#sortie_codePostal').replaceWith(
+                        $(html.responseText).find('#sortie_codePostal')
+                    );
                 }
             });
         });

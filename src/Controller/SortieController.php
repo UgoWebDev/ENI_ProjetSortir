@@ -10,7 +10,7 @@ use App\Form\SortieType;
 use App\Repository\EtatRepository;
 use App\Repository\InscriptionRepository;
 use App\Repository\SortieRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -80,31 +80,30 @@ class SortieController extends AbstractController
 
 
 
-    //Patrick
+    //Patrick à partir de cette ligne
 
     #[Route('/register/{id}', name: 'register', requirements: ['page' => '\d+'])]
     public function register(
         int $id,
-        EntityManagerInterface $entityManager,
         SortieRepository $sortieRepository,
+        InscriptionRepository  $inscriptionRepository,
     ): Response
     {
         $sortie = $sortieRepository->find($id);
         if ($sortie->getEtat()->getId() != 2) {
             $this->addFlash('fail', "L'état initial n'est pas ouvert !");
-        } elseif ($sortie->getDateLimiteInscription() < new \DateTime('now')) {
+        } elseif ($sortie->getDateLimiteInscription() < new DateTime('now')) {
             $this->addFlash('fail', "Impossible de sinscrire à une sortie après la date limite !");
         } elseif ($sortie->getNbInscriptionsMax()  <= $sortie->getInscriptions()->count()) {
             $this->addFlash('fail', "Impossible de sinscrire à une sortie déjà pleine !");
         } else {
             $inscription = new Inscription;
-            $inscription->setDateInscription(new \DateTime('now'));
+            $inscription->setDateInscription(new DateTime('now'));
             $inscription->setEstInscrit($this->getUser());
             $inscription->setInclus($sortie);
             $sortie->addInscription($inscription);
-            $entityManager->persist($sortie);
-            $entityManager->persist($inscription);
-            $entityManager->flush();
+            $sortieRepository->save($sortie, true);
+            $inscriptionRepository->save($inscription, true);
             $this->addFlash('success', 'Vous êtes bien inscrit à la sortie!');
         }
         return $this->redirectToRoute('main_home');
@@ -113,7 +112,6 @@ class SortieController extends AbstractController
     #[Route('/desist/{id}', name: 'desist', requirements: ['page' => '\d+'])]
     public function desist(
         int                    $id,
-        EntityManagerInterface $entityManager,
         SortieRepository       $sortieRepository,
         InscriptionRepository  $inscriptionRepository,
     ): Response
@@ -129,9 +127,8 @@ class SortieController extends AbstractController
             $sortie->removeInscription($inscription);
             $inscriptions = $sortie->getInscriptions();
             $inscriptions->remove($inscription);
-            $entityManager->persist($sortie);
-            $entityManager->persist($inscription);
-            $entityManager->flush();
+            $sortieRepository->save($sortie, true);
+            $inscriptionRepository->save($inscription, true);
             $this->addFlash('success', 'Vous êtes bien désisté de la sortie!');
         }
         return $this->redirectToRoute('main_home');
@@ -140,7 +137,6 @@ class SortieController extends AbstractController
     #[Route('/publish/{id}', name: 'publish', requirements: ['page' => '\d+'])]
     public function publish(
         int $id,
-        EntityManagerInterface $entityManager,
         SortieRepository $sortieRepository,
         EtatRepository $etatRepository,
 
@@ -154,8 +150,7 @@ class SortieController extends AbstractController
         } else {
             $etat = $etatRepository->find(2);
             $sortie->setEtat($etat);
-            $entityManager->persist($sortie);
-            $entityManager->flush();
+            $sortieRepository->save($sortie, true);
             $this->addFlash('success', 'La sortie est bien publié!');
 
         }
@@ -174,8 +169,10 @@ class SortieController extends AbstractController
         $sortie = $sortieRepository->find($id);
         if ($sortie->getEtat()->getId() > 3) {
             $this->addFlash('fail', "Impossible de supprimer une sortie une fois qu'elle a commencée !");
+            return $this->redirectToRoute('main_home');
         } elseif ($sortie->getOrganisateur() !== $this->getUser()) {
             $this->addFlash('fail', "Impossible de supprimer une sortie que vous n'avez pas créée !");
+            return $this->redirectToRoute('main_home');
         } else {
             $deleteForm = $this->createForm(DeleteType::class, $sortie);
             $deleteForm->handleRequest($request);

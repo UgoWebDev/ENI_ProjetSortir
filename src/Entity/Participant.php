@@ -59,6 +59,9 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'estInscrit', targetEntity: Inscription::class)]
     private Collection $inscriptions;
 
+    #[ORM\Column(length: 255)]
+    private ?string $photo = null;
+
     public function __construct()
     {
         $this->sorties = new ArrayCollection();
@@ -275,6 +278,18 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
                 $inscription->setEstInscrit(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(string $photo): self
+    {
+        $this->photo = $photo;
 
         return $this;
     }

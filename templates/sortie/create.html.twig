@@ -15,6 +15,10 @@
         <p>Campus : {{ app.user.estRattacheA.nom }}</p>
         {{ form_row(sortieForm.ville) }}
         {{ form_row(sortieForm.lieu) }}
+
+
+
+
         {{ form_row(sortieForm.codePostal) }}
 
         <button>Enregistrer</button>
@@ -24,10 +28,10 @@
         {{ form_end(sortieForm) }}
 
         {#
-            <p>Rue : {{ sortie.lieu.rue }}</p>
-            <p>Code postal : {{ sortie.lieu.ville.codePostal }}</p>
-            <p>Latitude : {{ sortie.lieu.latitude }}</p>
-            <p>Longitude : {{ sortie.lieu.longitude }}</p>
+        <p>Rue : {{ sortie.lieu.rue }}</p>
+        <p>Code postal : {{ sortie.lieu.ville.codePostal }}</p>
+        <p>Latitude : {{ sortie.lieu.latitude }}</p>
+        <p>Longitude : {{ sortie.lieu.longitude }}</p>
         #}
 
 
@@ -35,6 +39,7 @@
 
     <script>
         let $ville = $('#sortie_ville');
+
         $ville.change(function() {
 
             let $form = $(this).closest('form');
@@ -56,5 +61,20 @@
                 }
             });
         });
+
+        let $lieu = $('#sortie_lieu');
+
+        $lieu.change(function() {
+
+            let dateAEnvoyer = $lieu.val();
+
+            console.log("data:" + dateAEnvoyer);
+
+            $.ajax(
+
+            )
+        });
+
+        console.log($lieu);
     </script>
 {% endblock %}

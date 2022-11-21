@@ -56,7 +56,7 @@ class SortieType extends AbstractType
                 'mapped' => false,
             ]);
 
-        $formModifier = function (FormInterface $form, Ville $ville = null, Lieu $lieu = null) {
+        $formModifier = function (FormInterface $form, Ville $ville = null) {
             $lieux = null === $ville ? [] : $ville->getLieux();
             $codePostal = null === $ville ? [] : $ville->getCodePostal();
 

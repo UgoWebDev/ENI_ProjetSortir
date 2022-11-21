@@ -22,9 +22,8 @@ class SortieController extends AbstractController
     #[Route('/create', name: 'create')]
     public function create(
         Request $request,
-        EntityManagerInterface $entityManager,
+        //EntityManagerInterface $entityManager,
         SortieRepository $sortieRepository,
-
     ): Response
     {
         $sortie = new Sortie();
@@ -38,10 +37,13 @@ class SortieController extends AbstractController
             $sortie -> setSiteOrganisateur($campus);
             $sortie -> setOrganisateur($this->getUser());
             dump($sortie);
-            $entityManager->persist($sortie);
-            $entityManager->flush();
 
-            $this->addFlash('success', 'La sortie est bien oublié!');
+            $sortieRepository->save($sortie, true);
+
+            /*$entityManager->persist($sortie);
+            $entityManager->flush();*/
+
+            $this->addFlash('success', 'La sortie est bien enregistré!');
             return $this->redirectToRoute('main_home');
         }
     dump($sortieForm);
@@ -51,16 +53,19 @@ class SortieController extends AbstractController
         ]);
     }
 
+    #[Route('/lieu/{id}', name: 'lieu')]
+    public function lieu(Lieu $lieu): Response
+    {
+        return $this->render('sortie/create.html.twig', [
+            'lieu' => $lieu,
+        ]);
+    }
+
 
     #[Route('/details/{id}', name: 'details', requirements: ['page' => '\d+'])]
-    public function details(int $id, SortieRepository $sortieRepository): Response
+    //Param converteur de sortie et tout est géré par symfony
+    public function details(Sortie $sortie): Response
     {
-        $sortie = $sortieRepository->find($id);
-
-        if(!$sortie){
-            throw $this->createNotFoundException('La sortie que vous souhaitez afficher n\'hésiste pas!');
-        }
-
         return $this->render('sortie/details.html.twig', [
             'sortie' => $sortie,
         ]);
@@ -72,6 +77,7 @@ class SortieController extends AbstractController
     {
         return $this->render('sortie/update.html.twig');
     }
+
 
 
     //Patrick

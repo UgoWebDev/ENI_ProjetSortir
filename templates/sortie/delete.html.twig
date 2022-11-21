@@ -1,6 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <div>
+        {{ form_start(commentForm) }}
+        <h1>Annulation d'une sortie</h1>
+        <h2>{{ sortie.nom }}</h2>
+        <br />
+        {{ form_widget(commentForm) }}
+        <button>Valider</button>
+        {{ form_end(commentForm) }}
+    </div>
 
 {% endblock %}
 

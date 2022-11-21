@@ -3,12 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Inscription;
+use App\Entity\Lieu;
 use App\Entity\Sortie;
+use App\Form\DeleteType;
 use App\Form\SortieType;
-use App\Entity\Participant;
 use App\Repository\EtatRepository;
 use App\Repository\InscriptionRepository;
-use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -165,9 +165,9 @@ class SortieController extends AbstractController
     #[Route('/delete/{id}', name: 'delete', requirements: ['page' => '\d+'])]
     public function delete(
         int $id,
-        EntityManagerInterface $entityManager,
         SortieRepository $sortieRepository,
         EtatRepository $etatRepository,
+        Request $request,
 
     ): Response
     {
@@ -177,17 +177,22 @@ class SortieController extends AbstractController
         } elseif ($sortie->getOrganisateur() !== $this->getUser()) {
             $this->addFlash('fail', "Impossible de supprimer une sortie que vous n'avez pas créée !");
         } else {
-            $etat = $etatRepository->find(6);
-            $sortie->setEtat($etat);
-            $entityManager->persist($sortie);
-            $entityManager->flush();
-            $this->addFlash('success', 'La sortie est bien supprimée!');
+            $deleteForm = $this->createForm(DeleteType::class, $sortie);
+            $deleteForm->handleRequest($request);
+
+            if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
+                $sortie->setTxtAnnulation($deleteForm->get('txtAnnulation')->getData());
+                $etat = $etatRepository->find(6);
+                $sortie->setEtat($etat);
+                $sortieRepository->save($sortie, true);
+                $this->addFlash('success', 'La sortie est bien supprimée!');
+                return $this->redirectToRoute('main_home');
+            }
 
         }
-        return $this->redirectToRoute('main_home');
+        return $this->render('sortie/delete.html.twig', [
+            'commentForm' => $deleteForm->createView(),
+            'sortie' => $sortie,
+        ]);
     }
-
-
-
-
 }

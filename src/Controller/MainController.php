@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\MainType;
 use App\Repository\SortieRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -84,6 +85,7 @@ class MainController extends AbstractController
         return $this->render('main/accueil.html.twig', [
             'mainForm' => $mainForm->createView(),
             'mesSorties' => $sorties,
+            'maintenant' => new DateTime(),
         ]);
     }
 

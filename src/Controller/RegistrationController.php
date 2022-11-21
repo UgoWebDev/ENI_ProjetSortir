@@ -26,7 +26,6 @@ class RegistrationController extends AbstractController
         $user -> setIsAdministrateur(false);
         $user -> setIsActif(true);
 
-
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 

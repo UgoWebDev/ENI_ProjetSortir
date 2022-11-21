@@ -54,6 +54,9 @@ class Sortie
     #[ORM\OneToMany(mappedBy: 'inclus', targetEntity: Inscription::class)]
     private Collection $inscriptions;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $txtAnnulation = null;
+
     public function __construct()
     {
         $this->inscriptions = new ArrayCollection();
@@ -210,6 +213,18 @@ class Sortie
                 $inscription->setInclus(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTxtAnnulation(): ?string
+    {
+        return $this->txtAnnulation;
+    }
+
+    public function setTxtAnnulation(?string $txtAnnulation): self
+    {
+        $this->txtAnnulation = $txtAnnulation;
 
         return $this;
     }

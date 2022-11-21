@@ -5,7 +5,7 @@
     <ul>
         {% if is_granted("ROLE_ADMIN") %}
             <li>
-                <a href="{{ path('profile_register' )}}" title="villes">Villes</a>
+                <a href="{{ path('main_ville' )}}" title="villes">Villes</a>
                 <a href="{{ path('profile_register')}}" title="Campus">Campus</a>
             </li>
         {% endif %}

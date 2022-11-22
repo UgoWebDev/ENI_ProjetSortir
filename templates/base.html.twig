@@ -20,7 +20,11 @@
     </head>
     <body>
         <header>
+            <h1 class="logo">
+                <a href="{{ path('main_home') }}" title="logo sortir.com">sortir.com</a>
+            </h1>
             {% include ("inc/nav.html.twig") %}
+            <p>Date du jour: {{ "now" | date('d/m/Y') }}</p>
         </header>
 
         <main>

@@ -32,7 +32,7 @@ class SortieController extends AbstractController
         $sortieForm = $this->createForm(SortieType::class, $sortie);
 
         $sortieForm->handleRequest($request);
-
+        dump($sortie);
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
             $campus = $this->getUser() -> getEstRattacheA();
             $sortie -> setSiteOrganisateur($campus);
@@ -61,6 +61,7 @@ class SortieController extends AbstractController
         int $id,
     ): Response
     {
+        dump($id);
         $lieu = $lieuRepository->find($id);
         $rue = $lieu->getRue();
         $latitude = $lieu->getLatitude();

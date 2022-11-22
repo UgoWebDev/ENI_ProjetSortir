@@ -15,26 +15,19 @@
         <p>Campus : {{ app.user.estRattacheA.nom }}</p>
         {{ form_row(sortieForm.ville) }}
         {{ form_row(sortieForm.lieu) }}
-
-
-
-
-
         {{ form_row(sortieForm.codePostal) }}
+
+       {% if  sortie.lieu != null %}
+            <p>Rue : {{ rue }} </p>
+            <p>Latitude : {{ latitude }}</p>
+            <p>Longitude : {{ longitude }}</p>
+        {% endif %}
 
         <button>Enregistrer</button>
         <button>Publier la sortie</button>
         <button>Annuler</button>
 
         {{ form_end(sortieForm) }}
-
-        {#
-        <p>Rue : {{ rue }} </p>
-       <p>Code postal : {{ sortie.lieu.ville.codePostal }}</p>
-       <p>Latitude : {{ latitude }}</p>
-       <p>Longitude : {{ longitude }}</p>
-        #}
-
 
     </div>
 
@@ -68,25 +61,26 @@
 
 
         $(document).on('change', '#sortie_lieu', function() {
-        let $lieu = $('#sortie_lieu');
+            //let xhr = new XMLHttpRequest();
 
+            let $form = $(this).closest('form');
+
+            let $lieu = $('#sortie_lieu');
             let $id = $lieu.val();
-            let data = {};
-            data[$lieu.attr('name')] = $lieu.val();
 
-            console.log($lieu.val());
+            let url = 'http://127.0.0.1:8000/sortie/lieu/' + $id;
+
+            //xhr.open($form.attr('method'), url);
+
+            //xhr.responseType = "json";
+
+            //xhr.send();
 
             $.ajax({
-                url : 'http://127.0.0.1:8000/sortie/lieu/{$id}',
-                type : POST,
-                data : data,
-                autocomplete: function (html) {
-
-
-                }
-            })
-
-
+                url: url,
+                method: $form.attr('method'),
+                data: $form.serialize()
+            });
         });
 
     </script>

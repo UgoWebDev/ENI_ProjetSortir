@@ -17,11 +17,11 @@
         {{ form_row(sortieForm.lieu) }}
         {{ form_row(sortieForm.codePostal) }}
 
-       {% if  sortie.lieu != null %}
-            <p>Rue : {{ rue }} </p>
-            <p>Latitude : {{ latitude }}</p>
-            <p>Longitude : {{ longitude }}</p>
-        {% endif %}
+
+        {#
+        <p>Rue : {{ JsonResponse.rue }} </p>
+        <p>Latitude : {{ responseJSON.latitude }}</p>
+        <p>Longitude : {{ responseJSON.longitude }}</p>#}
 
         <button>Enregistrer</button>
         <button>Publier la sortie</button>
@@ -61,25 +61,18 @@
 
 
         $(document).on('change', '#sortie_lieu', function() {
-            //let xhr = new XMLHttpRequest();
-
-            let $form = $(this).closest('form');
 
             let $lieu = $('#sortie_lieu');
             let $id = $lieu.val();
 
             let url = 'http://127.0.0.1:8000/sortie/lieu/' + $id;
-
-            //xhr.open($form.attr('method'), url);
-
-            //xhr.responseType = "json";
-
-            //xhr.send();
-
+            console.log(url);
             $.ajax({
                 url: url,
-                method: $form.attr('method'),
-                data: $form.serialize()
+                method: "GET",
+                complete: function (response){
+                    console.log(response.responseJSON);
+                }
             });
         });
 

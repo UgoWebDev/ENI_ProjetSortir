@@ -13,6 +13,7 @@ use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,7 +33,7 @@ class SortieController extends AbstractController
         $sortieForm = $this->createForm(SortieType::class, $sortie);
 
         $sortieForm->handleRequest($request);
-        dump($sortie);
+
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
             $campus = $this->getUser() -> getEstRattacheA();
             $sortie -> setSiteOrganisateur($campus);
@@ -67,11 +68,7 @@ class SortieController extends AbstractController
         $latitude = $lieu->getLatitude();
         $longitude = $lieu->getLongitude();
 
-        return $this->render('sortie/create.html.twig', [
-            'rue' => $rue,
-            'latitude' => $latitude,
-            'longitude' => $longitude,
-        ]);
+        return new JsonResponse(['rue' => $rue, 'latitude' => $latitude, 'longitude' => $longitude]);
     }
 
 

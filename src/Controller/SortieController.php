@@ -22,8 +22,8 @@ class SortieController extends AbstractController
     #[Route('/create', name: 'create')]
     public function create(
         Request $request,
-        //EntityManagerInterface $entityManager,
         SortieRepository $sortieRepository,
+        EtatRepository $etatRepository,
     ): Response
     {
         $sortie = new Sortie();
@@ -36,7 +36,12 @@ class SortieController extends AbstractController
             $campus = $this->getUser() -> getEstRattacheA();
             $sortie -> setSiteOrganisateur($campus);
             $sortie -> setOrganisateur($this->getUser());
+
+            $etat = $etatRepository->find(2);
+            $sortie->setEtat($etat);
             dump($sortie);
+
+
 
             $sortieRepository->save($sortie, true);
 

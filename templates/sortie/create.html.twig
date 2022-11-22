@@ -19,6 +19,7 @@
 
 
 
+
         {{ form_row(sortieForm.codePostal) }}
 
         <button>Enregistrer</button>
@@ -28,10 +29,10 @@
         {{ form_end(sortieForm) }}
 
         {#
-        <p>Rue : {{ sortie.lieu.rue }}</p>
-        <p>Code postal : {{ sortie.lieu.ville.codePostal }}</p>
-        <p>Latitude : {{ sortie.lieu.latitude }}</p>
-        <p>Longitude : {{ sortie.lieu.longitude }}</p>
+        <p>Rue : {{ rue }} </p>
+       <p>Code postal : {{ sortie.lieu.ville.codePostal }}</p>
+       <p>Latitude : {{ latitude }}</p>
+       <p>Longitude : {{ longitude }}</p>
         #}
 
 
@@ -47,6 +48,8 @@
             let data = {};
             data[$ville.attr('name')] = $ville.val();
 
+            console.log($ville.val());
+
             $.ajax({
                 url : $form.attr('action'),
                 type : $form.attr('method'),
@@ -59,22 +62,32 @@
                         $(html.responseText).find('#sortie_codePostal')
                     );
                 }
+
             });
         });
 
+
+        $(document).on('change', '#sortie_lieu', function() {
         let $lieu = $('#sortie_lieu');
 
-        $lieu.change(function() {
+            let $id = $lieu.val();
+            let data = {};
+            data[$lieu.attr('name')] = $lieu.val();
 
-            let dateAEnvoyer = $lieu.val();
+            console.log($lieu.val());
 
-            console.log("data:" + dateAEnvoyer);
+            $.ajax({
+                url : 'http://127.0.0.1:8000/sortie/lieu/{$id}',
+                type : POST,
+                data : data,
+                autocomplete: function (html) {
 
-            $.ajax(
 
-            )
+                }
+            })
+
+
         });
 
-        console.log($lieu);
     </script>
 {% endblock %}

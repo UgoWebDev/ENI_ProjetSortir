@@ -40,9 +40,6 @@ class SortieController extends AbstractController
 
             $etat = $etatRepository->find(1);
             $sortie->setEtat($etat);
-            dump($sortie);
-
-
 
             $sortieRepository->save($sortie, true);
 
@@ -52,7 +49,6 @@ class SortieController extends AbstractController
             $this->addFlash('success', 'La sortie est bien enregistré!');
             return $this->redirectToRoute('main_home');
         }
-    dump($sortieForm);
         return $this->render('sortie/create.html.twig', [
             'sortieForm' => $sortieForm->createView(),
             'sortie' => $sortie,
@@ -66,9 +62,9 @@ class SortieController extends AbstractController
     ): Response
     {
         $lieu = $lieuRepository->find($id);
-        $rue = $this->setNom($lieu)->getRue();
-        $latitude = $this->setNom($lieu)->getLatitude();
-        $longitude = $this->setNom($lieu)->getLongitude();
+        $rue = $lieu->getRue();
+        $latitude = $lieu->getLatitude();
+        $longitude = $lieu->getLongitude();
 
         return $this->render('sortie/create.html.twig', [
             'rue' => $rue,

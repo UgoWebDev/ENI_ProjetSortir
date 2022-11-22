@@ -9,6 +9,7 @@ use App\Form\DeleteType;
 use App\Form\SortieType;
 use App\Repository\EtatRepository;
 use App\Repository\InscriptionRepository;
+use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,7 +38,7 @@ class SortieController extends AbstractController
             $sortie -> setSiteOrganisateur($campus);
             $sortie -> setOrganisateur($this->getUser());
 
-            $etat = $etatRepository->find(2);
+            $etat = $etatRepository->find(1);
             $sortie->setEtat($etat);
             dump($sortie);
 
@@ -59,10 +60,20 @@ class SortieController extends AbstractController
     }
 
     #[Route('/lieu/{id}', name: 'lieu')]
-    public function lieu(Lieu $lieu): Response
+    public function lieu(
+        LieuRepository $lieuRepository,
+        int $id,
+    ): Response
     {
+        $lieu = $lieuRepository->find($id);
+        $rue = $this->setNom($lieu)->getRue();
+        $latitude = $this->setNom($lieu)->getLatitude();
+        $longitude = $this->setNom($lieu)->getLongitude();
+
         return $this->render('sortie/create.html.twig', [
-            'lieu' => $lieu,
+            'rue' => $rue,
+            'latitude' => $latitude,
+            'longitude' => $longitude,
         ]);
     }
 

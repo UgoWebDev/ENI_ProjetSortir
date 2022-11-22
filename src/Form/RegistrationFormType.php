@@ -6,10 +6,12 @@ use App\Entity\Campus;
 use App\Entity\Participant;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RegistrationFormType extends AbstractType
@@ -39,7 +41,25 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-
+            ->add('photo', FileType::class, [
+                'label' => 'Photo',
+                // unmapped means that this field is not associated to any entity property
+                'mapped' => false,
+                // make it optional so you don't have to re-upload the PDF file
+                // every time you edit the Profile details
+                'required' => false,
+                // unmapped fields can't define their validation using annotations
+                // in the associated entity, so you can use the PHP constraint classes
+                'constraints' => [
+                    new File([
+                        'maxSize' => '100000k',
+                        'mimeTypes' => [
+                            'application/jpg',
+                        ],
+                        'mimeTypesMessage' => 'Merci de de charger un fichier de type JPG',
+                    ])
+                ],
+            ])
             ->add('telephone')
             ->add('estRattacheA', EntityType::class, [
                 'class' => Campus::class,

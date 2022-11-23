@@ -104,7 +104,7 @@
 
                 </thead>
 
-                <tmain>
+                <tbody>
                     {% for sortie in mesSorties %}
                         <tr>
                             <td><a href="{{ path('sortie_details',{'id': sortie.id}) }}">{{ sortie.nom }}</a></td>
@@ -112,7 +112,7 @@
                             <td>{{ sortie.lieu.nom  }}</td>
                         </tr>
                     {% endfor %}
-                </tmain>
+                </tbody>
             </table>
         </div>
 

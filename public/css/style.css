@@ -216,6 +216,11 @@ img
     justify-content: space-between;
 }
 
+.tab_sorties_mini
+{
+    display: none;
+}
+
 @media screen and (max-width: 960px)
 {
     body

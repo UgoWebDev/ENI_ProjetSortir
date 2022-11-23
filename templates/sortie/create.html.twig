@@ -16,9 +16,7 @@
         {{ form_row(sortieForm.ville) }}
         <div class="ajout_lieu">
             {{ form_row(sortieForm.lieu) }}
-            {% if is_granted("ROLE_ADMIN") %}
             <a href="{{ path('lieu_ajout') }}"><img src="{{ asset('images/img_ajout_lieu.png') }}" alt="signe + pour ajout lieu"></a>
-            {% endif %}
         </div>
         <div class="affichage">
 

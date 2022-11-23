@@ -199,8 +199,6 @@ class SortieController extends AbstractController
         int $id,
         SortieRepository $sortieRepository,
         EtatRepository $etatRepository,
-        EntityManager $entityManager,
-
     ): Response
     {
         $sortie = $sortieRepository->find($id);
@@ -223,7 +221,6 @@ class SortieController extends AbstractController
         int $id,
         SortieRepository $sortieRepository,
         EtatRepository $etatRepository,
-        EntityManager $entityManager,
         Request $request,
 
     ): Response

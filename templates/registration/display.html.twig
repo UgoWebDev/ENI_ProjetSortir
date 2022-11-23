@@ -25,6 +25,20 @@
                 <div>
                     <p>Email : {{ user.email }}</p>
                 </div>
+
+                {% if is_granted("ROLE_ADMIN") %}
+                    <div>
+                        <button>
+                            Rendre inactif
+                        </button>
+                        <button>
+                            Supprimer l'utilisateur
+                        </button>
+                    </div>
+
+
+                {% endif %}
+                
             </section>
         </div>
     </div>

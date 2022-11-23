@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Ajout Lieu{% endblock %}
+
+{% block body %}
+    {{ form_start(lieuForm) }}
+
+    {{ form_row(lieuForm.nom) }}
+    {{ form_row(lieuForm.rue) }}
+    {{ form_row(lieuForm.latitude) }}
+    {{ form_row(lieuForm.longitude) }}
+    {{ form_row(lieuForm.ville) }}
+
+    {{ form_end(lieuForm) }}
+
+{% endblock %}

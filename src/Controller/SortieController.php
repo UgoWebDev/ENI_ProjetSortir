@@ -35,8 +35,12 @@ class SortieController extends AbstractController
     {
         if($id == 0){
             $sortie = new Sortie();
+            $ville = null;
         }else{
             $sortie = $sortieRepository -> find($id);
+            $ville = $sortie-> getLieu() ->getVille()->getNom();
+            dump($sortie);
+            dump($ville);
         }
 
         $sortieForm = $this->createForm(SortieType::class, $sortie);
@@ -44,12 +48,14 @@ class SortieController extends AbstractController
         $sortieForm->handleRequest($request);
 
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
-            $campus = $this->getUser() -> getEstRattacheA();
-            $sortie -> setSiteOrganisateur($campus);
-            $sortie -> setOrganisateur($this->getUser());
+            if($id == 0) {
+                $campus = $this->getUser()->getEstRattacheA();
+                $sortie->setSiteOrganisateur($campus);
+                $sortie->setOrganisateur($this->getUser());
 
-            $etat = $etatRepository->find(1);
-            $sortie->setEtat($etat);
+                $etat = $etatRepository->find(1);
+                $sortie->setEtat($etat);
+            }
 
             $sortieRepository->save($sortie, true);
 
@@ -62,6 +68,7 @@ class SortieController extends AbstractController
         return $this->render('sortie/create.html.twig', [
             'sortieForm' => $sortieForm->createView(),
             'sortie' => $sortie,
+            'ville' => $ville,
         ]);
     }
 
@@ -127,6 +134,7 @@ class SortieController extends AbstractController
     ): Response
     {
         $sortie = $sortieRepository->find($id);
+
         // Vérifie sir la sortie est ouverte, que la date d'inscription n'est pas passée et qu'il reste de la place
         if ($sortie->getEtat()->getId() != 2) {
             $this->addFlash('fail', "L'état initial n'est pas ouvert !");

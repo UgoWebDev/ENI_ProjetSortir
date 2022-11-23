@@ -253,5 +253,6 @@ class SortieController extends AbstractController
             'commentForm' => $deleteForm->createView(),
             'sortie' => $sortie,
         ]);
+
     }
 }

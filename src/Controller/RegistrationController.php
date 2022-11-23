@@ -84,6 +84,28 @@ class RegistrationController extends AbstractController
         $updateform = $this->createForm(RegistrationFormType::class, $user);
 
         $updateform->handleRequest($request);
+
+        /** @var UploadedFile $uploadedFile */
+        $uploadedFile = $updateform->get('photoFile')->getData();
+
+        if ($uploadedFile) {
+            $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+            // this is needed to safely include the file name as part of the URL
+            $safeFilename = $slugger->slug($originalFilename);
+            $newFilename = $safeFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
+
+            // Move the file to the directory where brochures are stored
+            try {
+                $uploadedFile->move(
+                    $this->getParameter('photo_directory'),
+                    $newFilename
+                );
+            } catch (FileException $e) {
+                // ... handle exception if something happens during file upload
+            }
+            $user->setPhoto($newFilename);
+        }
+
         if ($updateform->isSubmitted() && $updateform->isValid()) {
             // encode the plain password
             $user->setPassword(
@@ -92,26 +114,11 @@ class RegistrationController extends AbstractController
                     $updateform->get('password')->getData()
                 )
             );
-            /** @var UploadedFile $uploadedFile */
-            $uploadedFile = $updateform->get('photoFile')->getData();
 
-            if ($uploadedFile) {
-                $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
-
-                // Move the file to the directory where brochures are stored
-                try {
-                    $uploadedFile->move(
-                        $this->getParameter('photo_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
-                $user->setPhoto($newFilename);
-            }
+            $this->addFlash(
+                'success',
+                'Vos modification ont bien etes enregistrees.'
+            );
 
             $entityManager->persist($user);
             $entityManager->flush();
@@ -124,13 +131,9 @@ class RegistrationController extends AbstractController
             );
         }
 
-        $this->addFlash(
-            'success',
-            'Vos modification ont bien etes enregistrees.'
-        );
-
         return $this->render('registration/update.html.twig',[
             'registrationForm' => $updateform->createView(),
+                $this->redirectToRoute('profile_update')
 
         ]);
     }

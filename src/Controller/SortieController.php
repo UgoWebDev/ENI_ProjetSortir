@@ -97,7 +97,7 @@ class SortieController extends AbstractController
     }
 
 
-    #[Route('/update', name: 'update')]
+    #[Route('/update/{id}', name: 'update', requirements: ['page' => '\d+'])]
     public function update(): Response
     {
         return $this->render('sortie/update.html.twig');

@@ -3,29 +3,30 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <div>
-        image
-    </div>
+        <div class="pdp">
+            <img src="{{ asset('upload/photos/' ~ app.user.photo) }}" alt="Photo indisponible" >
+        </div>
 
-    <h1>Mon profil</h1>
+        <div class="profile">
+            <h1>Mon profil</h1>
 
-    {{ form_start(registrationForm) }}
+            {{ form_start(registrationForm) }}
 
-    {{ form_row(registrationForm.photo) }}
+            {{ form_row(registrationForm.photoFile) }}
 
-    {{ form_row(registrationForm.pseudo) }}
-    {{ form_row(registrationForm.prenom) }}
-    {{ form_row(registrationForm.nom) }}
-    {{ form_row(registrationForm.telephone) }}
-    {{ form_row(registrationForm.email) }}
-    {{ form_row(registrationForm.password) }}
-    {{ form_row(registrationForm.estRattacheA) }}
+            {{ form_row(registrationForm.pseudo) }}
+            {{ form_row(registrationForm.prenom) }}
+            {{ form_row(registrationForm.nom) }}
+            {{ form_row(registrationForm.telephone) }}
+            {{ form_row(registrationForm.email) }}
+            {{ form_row(registrationForm.password) }}
+            {{ form_row(registrationForm.estRattacheA) }}
 
+            <div>
+                <button type="submit" class="btn">Enregistrer</button>
+                <button type="reset" class="btn">Annuler</button>
+            </div>
 
-    <div>
-        <button type="submit" class="btn">Enregistrer</button>
-        <button type="reset" class="btn">Annuler</button>
-    </div>
-
-    {{ form_end(registrationForm) }}
+        </div>
+        {{ form_end(registrationForm) }}
 {% endblock %}

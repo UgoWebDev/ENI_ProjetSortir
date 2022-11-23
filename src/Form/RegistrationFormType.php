@@ -31,7 +31,7 @@ class RegistrationFormType extends AbstractType
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'Valider le mot de passe',
                     ]),
                     new Length([
                         'min' => 6,
@@ -41,7 +41,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('photo', FileType::class, [
+            ->add('photoFile', FileType::class, [
                 'label' => 'Photo',
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,
@@ -54,9 +54,9 @@ class RegistrationFormType extends AbstractType
                     new File([
                         'maxSize' => '100000k',
                         'mimeTypes' => [
-                            'application/jpg',
+                            'image/png',
                         ],
-                        'mimeTypesMessage' => 'Merci de de charger un fichier de type JPG',
+                        'mimeTypesMessage' => 'Merci de de charger un fichier de type PNG',
                     ])
                 ],
             ])

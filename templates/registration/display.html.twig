@@ -3,16 +3,30 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Profil de {{ user.nom }}</h1>
+    <div>
+        <h1 style="text-align: center">Profil de {{ user.nom }}</h1>
 
-    <div class="container">
-        <section>
-            todo: img
-            <p>Prénom : {{ user.prenom }}</p>
-            <p>Nom : {{ user.nom }}</p>
-            <p>Telephone : {{ user.telephone }}</p>
-            <p>Email : {{ user.email }}</p>
-        </section>
+        <div class="profile">
+            <div class="pdp">
+                <img src="{{ asset('upload/photos/' ~ user.photo) }}" alt="Photo indisponible">
+            </div>
+
+            <section class="display">
+
+                <div>
+                    <p>Prénom : {{ user.prenom }}</p>
+                </div>
+                <div>
+                    <p>Nom : {{ user.nom }}</p>
+                </div>
+                <div>
+                    <p>Telephone : {{ user.telephone }}</p>
+                </div>
+                <div>
+                    <p>Email : {{ user.email }}</p>
+                </div>
+            </section>
+        </div>
     </div>
 
 

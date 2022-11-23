@@ -82,11 +82,8 @@ class RegistrationController extends AbstractController
     {
         $user = $this->getUser();
         $updateform = $this->createForm(RegistrationFormType::class, $user);
-        dump($user);
-        $updateform->handleRequest($request);
 
-        dump($updateform->isSubmitted());
-        dump($updateform->isSubmitted() && $updateform->isValid());
+        $updateform->handleRequest($request);
         if ($updateform->isSubmitted() && $updateform->isValid()) {
             // encode the plain password
             $user->setPassword(
@@ -95,20 +92,18 @@ class RegistrationController extends AbstractController
                     $updateform->get('password')->getData()
                 )
             );
-            /** @var UploadedFile $photo */
-            $photo = $updateform->get('photo')->getData();
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $updateform->get('photoFile')->getData();
 
-            dump($photo);
-            if ($photo) {
-                $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+            if ($uploadedFile) {
+                $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$photo->guessExtension();
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
 
-                dump($originalFilename, $safeFilename, $newFilename);
                 // Move the file to the directory where brochures are stored
                 try {
-                    $photo->move(
+                    $uploadedFile->move(
                         $this->getParameter('photo_directory'),
                         $newFilename
                     );

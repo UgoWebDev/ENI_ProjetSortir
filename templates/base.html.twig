@@ -26,7 +26,13 @@
             {% include ("inc/nav.html.twig") %}
             <p>Date du jour: {{ "now" | date('d/m/Y') }}</p>
         </header>
-
+        {% for label, messages in app.flashes%}
+            {% for message in messages %}
+                <div class="alert-{{ label }}">
+                {{ message }}
+                </div>
+            {% endfor%}
+        {% endfor%}
         <main>
 
             {% block body %}{% endblock %}

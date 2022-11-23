@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Inscription;
+use App\Entity\Participant;
 use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Form\DeleteType;
@@ -10,8 +11,10 @@ use App\Form\SortieType;
 use App\Repository\EtatRepository;
 use App\Repository\InscriptionRepository;
 use App\Repository\LieuRepository;
+use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use DateTime;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -100,20 +103,28 @@ class SortieController extends AbstractController
     ): Response
     {
         $sortie = $sortieRepository->find($id);
+        // Vérifie sir la sortie est ouverte, que la date d'inscription n'est pas passée et qu'il reste de la place
         if ($sortie->getEtat()->getId() != 2) {
             $this->addFlash('fail', "L'état initial n'est pas ouvert !");
         } elseif ($sortie->getDateLimiteInscription() < new DateTime('now')) {
             $this->addFlash('fail', "Impossible de sinscrire à une sortie après la date limite !");
         } elseif ($sortie->getNbInscriptionsMax()  <= $sortie->getInscriptions()->count()) {
-            $this->addFlash('fail', "Impossible de sinscrire à une sortie déjà pleine !");
+            $this->addFlash('fail', "Impossible de s'inscrire à une sortie déjà pleine !");
         } else {
+            // Crée l'instance de l'inscription
             $inscription = new Inscription;
             $inscription->setDateInscription(new DateTime('now'));
-            $inscription->setEstInscrit($this->getUser());
-            $inscription->setInclus($sortie);
+
+            // Ajoute l'inscription à la sortie
             $sortie->addInscription($inscription);
-            $sortieRepository->save($sortie, true);
+
+            // Ajoute l'inscription au participant
+            $this->getUser()->addInscription($inscription);
+
+
+            // Sauvegarde les entités
             $inscriptionRepository->save($inscription, true);
+
             $this->addFlash('success', 'Vous êtes bien inscrit à la sortie!');
         }
         return $this->redirectToRoute('main_home');
@@ -127,18 +138,25 @@ class SortieController extends AbstractController
     ): Response
     {
         $sortie = $sortieRepository->find($id);
-        if (($sortie->getEtat()->getId() != 2) or ($sortie->getEtat()->getId() != 3) ){
+        dump($sortie);
+
+        // on vérifie que la sortie est bien ouverte ou fermée (en cours)
+        if (($sortie->getEtat()->getId() != 2) and ($sortie->getEtat()->getId() != 3) ){
             $this->addFlash('fail', "L'état initial n'est pas ouvert ou cloturé !");
         } else {
+            // Récupère l'inscription
             $inscription = $inscriptionRepository->findOneBy([
                 'inclus'  => $sortie,
                 'estInscrit' => $this->getUser(),
             ]);
+
+            // Supprime l'inscription en cours
             $sortie->removeInscription($inscription);
-            $inscriptions = $sortie->getInscriptions();
-            $inscriptions->remove($inscription);
-            $sortieRepository->save($sortie, true);
+            $this->getUser()->removeInscription($inscription);
+
+            // sauvegarde l'entité
             $inscriptionRepository->save($inscription, true);
+
             $this->addFlash('success', 'Vous êtes bien désisté de la sortie!');
         }
         return $this->redirectToRoute('main_home');
@@ -149,6 +167,7 @@ class SortieController extends AbstractController
         int $id,
         SortieRepository $sortieRepository,
         EtatRepository $etatRepository,
+        EntityManager $entityManager,
 
     ): Response
     {
@@ -172,6 +191,7 @@ class SortieController extends AbstractController
         int $id,
         SortieRepository $sortieRepository,
         EtatRepository $etatRepository,
+        EntityManager $entityManager,
         Request $request,
 
     ): Response

@@ -4,6 +4,7 @@
 
 {% block body %}
     <h2>Nom de la sortie : {{ sortie.nom }}</h2>
+    <h3>Statut de la sortie : {{ sortie.etat.libelle }}</h3>
     <div class="container_detail">
         <div>
             <div>Date et heure de la sortie : {{ sortie.dateHeureDebut | date("d/m/Y h:i") }}</div>

@@ -25,14 +25,19 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/sortie', name: 'sortie_')]
 class SortieController extends AbstractController
 {
-    #[Route('/create', name: 'create')]
+    #[Route('/create/{id}', name: 'create', requirements: ['page' => '\d+'])]
     public function create(
         Request $request,
         SortieRepository $sortieRepository,
         EtatRepository $etatRepository,
+        int $id
     ): Response
     {
-        $sortie = new Sortie();
+        if($id == 0){
+            $sortie = new Sortie();
+        }else{
+            $sortie = $sortieRepository -> find($id);
+        }
 
         $sortieForm = $this->createForm(SortieType::class, $sortie);
 
@@ -98,9 +103,16 @@ class SortieController extends AbstractController
 
 
     #[Route('/update/{id}', name: 'update', requirements: ['page' => '\d+'])]
-    public function update(): Response
+    public function update(
+        SortieRepository $sortieRepository,
+        int $id,
+    ): Response
     {
-        return $this->render('sortie/update.html.twig');
+        $sortie = $sortieRepository -> find($id);
+
+        return $this->render('sortie/create.html.twig',[
+            'sortie' => $sortie,
+        ]);
     }
 
 

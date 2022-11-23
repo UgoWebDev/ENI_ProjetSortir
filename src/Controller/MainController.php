@@ -72,7 +72,7 @@ class MainController extends AbstractController
 
             }
             if ($mainForm->getClickedButton() && 'create' === $mainForm->getClickedButton()->getName()) {
-                return $this->redirectToRoute('sortie_create');
+                return $this->redirect('sortie/create/0');
             }
 
             dump($searchOptions);

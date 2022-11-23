@@ -72,6 +72,7 @@ class SortieController extends AbstractController
         ]);
     }
 
+    #[Route('/ville', name: 'villeSansID')]
     #[Route('/ville/{id}', name: 'ville')]
     public function ville(
         VilleRepository $villeRepository,
@@ -84,6 +85,7 @@ class SortieController extends AbstractController
         return new JsonResponse(['codePostal' => $codePostal]);
     }
 
+    #[Route('/lieu', name: 'lieuSansID')]
     #[Route('/lieu/{id}', name: 'lieu')]
     public function lieu(
         LieuRepository $lieuRepository,

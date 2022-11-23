@@ -50,10 +50,12 @@
                     );
                 },
             });
-
-            let url = 'http://127.0.0.1:8000/sortie/ville/' + $ville.val();
+            let $id = $ville.val();
+            console.log($id);
+            let $url = '{{ path('sortie_villeSansID' ) }}' + '/' + $id;
+            console.log($url);
             $.ajax({
-                url: url,
+                url: $url,
                 method: "GET",
                 complete: function (response){
                     let nouveauCodePostal = $("<div></div>");
@@ -69,10 +71,10 @@
             let $lieu = $('#sortie_lieu');
             let $id = $lieu.val();
 
-            let url = 'http://127.0.0.1:8000/sortie/lieu/' + $id;
+            let $url = '{{ path('sortie_lieuSansID' ) }}' + '/' + $id;
 
             $.ajax({
-                url: url,
+                url: $url,
                 method: "GET",
                 complete: function (response){
                     let rueReturn = 'Rue : ' + response.responseJSON.rue;

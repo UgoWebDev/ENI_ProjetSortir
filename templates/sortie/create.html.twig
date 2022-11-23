@@ -32,8 +32,12 @@
 
     <script>
         let $ville = $('#sortie_ville');
+        let $firstVille = true;
+        console.log('entrée fonction ' + $firstVille);
 
         $ville.change(function() {
+
+            console.log('entrée change ' + $firstVille);
 
             let $form = $(this).closest('form');
 
@@ -59,11 +63,19 @@
                 method: "GET",
                 complete: function (response){
                     let nouveauCodePostal = $("<div></div>");
-                    nouveauCodePostal.text('Code postal : ' + response.responseJSON.codePostal);
-                    //nouveauCodePostal.addClass("codePostal");
-                    nouveauCodePostal.prependTo($(".affichage"));
+                    console.log('avant test ' + $firstVille);
+                    if($firstVille) {
+                        nouveauCodePostal.text('Code postal : ' + response.responseJSON.codePostal);
+                        nouveauCodePostal.attr("id","codePostal");
+                        nouveauCodePostal.prependTo($(".affichage"));
+                        $firstVille = false;
+                    } else {
+                        $("#codePostal").text('Code postal : ' + response.responseJSON.codePostal);
+                    }
                 }
             });
+
+            console.log('sortie change ' + $firstVille);
         });
 
         $(document).on('change', '#sortie_lieu', function() {
@@ -83,14 +95,17 @@
 
                     let nouvelleRue = $("<div></div>");
                     nouvelleRue.text(rueReturn);
+                    nouvelleRue.addClass('rue');
                     nouvelleRue.prependTo($(".affichage"));
 
                     let nouvelleLatitude = $("<div></div>");
                     nouvelleLatitude.text(latitudeReturn);
+                    nouvelleRue.addClass('latitude');
                     nouvelleLatitude.appendTo($(".affichage"));
 
                     let nouvelleLongitude = $("<div></div>");
                     nouvelleLongitude.text(longitudeReturn);
+                    nouvelleRue.addClass('longitude');
                     nouvelleLongitude.appendTo($(".affichage"));
                 }
             });

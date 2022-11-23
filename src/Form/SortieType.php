@@ -58,7 +58,6 @@ class SortieType extends AbstractType
 
         $formModifier = function (FormInterface $form, Ville $ville = null) {
             $lieux = null === $ville ? [] : $ville->getLieux();
-            $codePostal = null === $ville ? [] : $ville->getCodePostal();
 
             $form->add('lieu', EntityType::class, [
                 'class' => Lieu::class,
@@ -66,12 +65,6 @@ class SortieType extends AbstractType
                 'placeholder' => 'Sélectionner lieu de la sortie',
                 'label' => 'Lieu :',
                 'choices' => $lieux,
-                ])
-                ->add('codePostal', TextType::class, [
-                    'label' => 'Code postal :',
-                    'data' => $codePostal,
-                    'disabled' => true,
-                    'mapped' => false,
                 ]);
         };
 

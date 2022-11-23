@@ -94,6 +94,28 @@
             </table>
         </div>
 
+        <div class="tab_sorties_mini">
+            <h2>Mes sorties :</h2>
+            <table>
+                <thead>
+                <th>Nom de la sortie</th>
+                <th>Date de la sortie</th>
+                <th>Lieu</th>
+
+                </thead>
+
+                <tmain>
+                    {% for sortie in mesSorties %}
+                        <tr>
+                            <td><a href="{{ path('sortie_details',{'id': sortie.id}) }}">{{ sortie.nom }}</a></td>
+                            <td>{{ sortie.dateHeureDebut|date("d/m/Y h:i")  }}</td>
+                            <td>{{ sortie.lieu.nom  }}</td>
+                        </tr>
+                    {% endfor %}
+                </tmain>
+            </table>
+        </div>
+
         <div class="container">
             {{ form_row(mainForm.create)}}
         </div>

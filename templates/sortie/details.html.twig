@@ -4,7 +4,7 @@
 
 {% block body %}
     <h2>Nom de la sortie : {{ sortie.nom }}</h2>
-    <div class="container">
+    <div class="container_detail">
         <div>
             <div>Date et heure de la sortie : {{ sortie.dateHeureDebut | date("d/m/Y h:i") }}</div>
             <div>Date limite d'inscription : {{ sortie.dateLimiteInscription | date("d/m/Y") }}</div>
@@ -22,9 +22,9 @@
         </div>
     </div>
     
-    <div>
+    <div class="list_inscrit">
         <h2>Liste des participants inscrits:</h2>
-        <div class="tab_sorties">
+        <div class="tab_participant">
             <table>
                 <thead>
                     <th>Pseudo</th>

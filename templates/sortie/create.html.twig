@@ -12,16 +12,17 @@
         {{ form_row(sortieForm.nbInscriptionsMax) }}
         {{ form_row(sortieForm.duree) }}
         {{ form_row(sortieForm.infosSortie) }}
-        <p>Campus : {{ app.user.estRattacheA.nom }}</p>
+        <div>Campus : {{ app.user.estRattacheA.nom }}</div>
         {{ form_row(sortieForm.ville) }}
-        {{ form_row(sortieForm.lieu) }}
-        {{ form_row(sortieForm.codePostal) }}
+        <div class="ajout_lieu">
+            {{ form_row(sortieForm.lieu) }}
+            {% if is_granted("ROLE_ADMIN") %}
+            <a href="{{ path('lieu_ajout') }}"><img src="{{ asset('images/img_ajout_lieu.png') }}" alt="signe + pour ajout lieu"></a>
+            {% endif %}
+        </div>
+        <div class="affichage">
 
-
-        {#
-        <p>Rue : {{ JsonResponse.rue }} </p>
-        <p>Latitude : {{ responseJSON.latitude }}</p>
-        <p>Longitude : {{ responseJSON.longitude }}</p>#}
+        </div>
 
         <button>Enregistrer</button>
         <button>Publier la sortie</button>
@@ -41,8 +42,6 @@
             let data = {};
             data[$ville.attr('name')] = $ville.val();
 
-            console.log($ville.val());
-
             $.ajax({
                 url : $form.attr('action'),
                 type : $form.attr('method'),
@@ -51,14 +50,21 @@
                     $('#sortie_lieu').replaceWith(
                         $(html.responseText).find('#sortie_lieu')
                     );
-                    $('#sortie_codePostal').replaceWith(
-                        $(html.responseText).find('#sortie_codePostal')
-                    );
-                }
+                },
+            });
 
+            let url = 'http://127.0.0.1:8000/sortie/ville/' + $ville.val();
+            $.ajax({
+                url: url,
+                method: "GET",
+                complete: function (response){
+                    let nouveauCodePostal = $("<div></div>");
+                    nouveauCodePostal.text('Code postal : ' + response.responseJSON.codePostal);
+                    //nouveauCodePostal.addClass("codePostal");
+                    nouveauCodePostal.prependTo($(".affichage"));
+                }
             });
         });
-
 
         $(document).on('change', '#sortie_lieu', function() {
 
@@ -66,12 +72,26 @@
             let $id = $lieu.val();
 
             let url = 'http://127.0.0.1:8000/sortie/lieu/' + $id;
-            console.log(url);
+
             $.ajax({
                 url: url,
                 method: "GET",
                 complete: function (response){
-                    console.log(response.responseJSON);
+                    let rueReturn = 'Rue : ' + response.responseJSON.rue;
+                    let latitudeReturn = 'Latitude : ' + response.responseJSON.latitude;
+                    let longitudeReturn = 'Longitude : ' + response.responseJSON.longitude;
+
+                    let nouvelleRue = $("<div></div>");
+                    nouvelleRue.text(rueReturn);
+                    nouvelleRue.prependTo($(".affichage"));
+
+                    let nouvelleLatitude = $("<div></div>");
+                    nouvelleLatitude.text(latitudeReturn);
+                    nouvelleLatitude.appendTo($(".affichage"));
+
+                    let nouvelleLongitude = $("<div></div>");
+                    nouvelleLongitude.text(longitudeReturn);
+                    nouvelleLongitude.appendTo($(".affichage"));
                 }
             });
         });

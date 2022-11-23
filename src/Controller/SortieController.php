@@ -13,6 +13,7 @@ use App\Repository\InscriptionRepository;
 use App\Repository\LieuRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
+use App\Repository\VilleRepository;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -50,7 +51,7 @@ class SortieController extends AbstractController
             /*$entityManager->persist($sortie);
             $entityManager->flush();*/
 
-            $this->addFlash('success', 'La sortie est bien enregistré!');
+            $this->addFlash('success', 'La sortie est bien enregistrée!');
             return $this->redirectToRoute('main_home');
         }
         return $this->render('sortie/create.html.twig', [
@@ -59,13 +60,24 @@ class SortieController extends AbstractController
         ]);
     }
 
+    #[Route('/ville/{id}', name: 'ville')]
+    public function ville(
+        VilleRepository $villeRepository,
+        int $id,
+    ): Response
+    {
+        $ville = $villeRepository->find($id);
+        $codePostal = $ville->getCodePostal();
+
+        return new JsonResponse(['codePostal' => $codePostal]);
+    }
+
     #[Route('/lieu/{id}', name: 'lieu')]
     public function lieu(
         LieuRepository $lieuRepository,
         int $id,
     ): Response
     {
-        dump($id);
         $lieu = $lieuRepository->find($id);
         $rue = $lieu->getRue();
         $latitude = $lieu->getLatitude();

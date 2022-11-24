@@ -72,7 +72,7 @@ class Sortie
         return $this->nom;
     }
 
-    public function setNom(string $nom): self
+    public function setNom(?string $nom = null): self
     {
         $this->nom = $nom;
 
@@ -96,7 +96,7 @@ class Sortie
         return $this->duree;
     }
 
-    public function setDuree(int $duree): self
+    public function setDuree(?int $duree = null): self
     {
         $this->duree = $duree;
 
@@ -120,7 +120,7 @@ class Sortie
         return $this->nbInscriptionsMax;
     }
 
-    public function setNbInscriptionsMax(int $nbInscriptionsMax): self
+    public function setNbInscriptionsMax(?int $nbInscriptionsMax = null): self
     {
         $this->nbInscriptionsMax = $nbInscriptionsMax;
 
@@ -132,7 +132,7 @@ class Sortie
         return $this->infosSortie;
     }
 
-    public function setInfosSortie(?string $infosSortie): self
+    public function setInfosSortie(?string $infosSortie = null): self
     {
         $this->infosSortie = $infosSortie;
 
@@ -144,7 +144,7 @@ class Sortie
         return $this->lieu;
     }
 
-    public function setLieu(?Lieu $lieu): self
+    public function setLieu(?Lieu $lieu = null): self
     {
         $this->lieu = $lieu;
 
@@ -156,7 +156,7 @@ class Sortie
         return $this->siteOrganisateur;
     }
 
-    public function setSiteOrganisateur(?Campus $siteOrganisateur): self
+    public function setSiteOrganisateur(?Campus $siteOrganisateur = null): self
     {
         $this->siteOrganisateur = $siteOrganisateur;
 
@@ -168,7 +168,7 @@ class Sortie
         return $this->organisateur;
     }
 
-    public function setOrganisateur(?Participant $organisateur): self
+    public function setOrganisateur(?Participant $organisateur = null): self
     {
         $this->organisateur = $organisateur;
 
@@ -180,7 +180,7 @@ class Sortie
         return $this->etat;
     }
 
-    public function setEtat(?Etat $etat): self
+    public function setEtat(?Etat $etat = null): self
     {
         $this->etat = $etat;
 

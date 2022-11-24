@@ -24,7 +24,7 @@
             <a href="{{ path('lieu_ajout') }}"><img src="{{ asset('images/img_ajout_lieu.png') }}" alt="signe + pour ajout lieu"></a>
         </div>
         <div class="affichageCoordoner">
-            {% if sortie.id > 0 %}
+            {% if sortie.lieu %}
                 <div>Rue : {{ sortie.lieu.rue }}</div>
                 <div>Code Postal : {{ sortie.lieu.ville.codePostal }}</div>
                 <div>Latitude : {{ sortie.lieu.latitude }}</div>

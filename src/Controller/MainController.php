@@ -88,36 +88,4 @@ class MainController extends AbstractController
             'maintenant' => new DateTime(),
         ]);
     }
-
-    #[Route('/ville', name: 'ville')]
-    public function ville(
-        Request $request,
-        EntityManagerInterface $entityManager,
-        SortieRepository $sortieRepository
-    ): Response
-    {
-        $sorties = $sortieRepository->findAll();
-//        dump($sorties);
-        $defauts = [];
-        $count = 0;
-        $count2 = 0;
-        $user = $this->getUser();
-        dump($user);
-
-        foreach ($sorties as $sortie) {
-            $count++;
-            $nbInscrits =  sizeof( $sortie->getInscriptions());
-            $nbPlaces = $sortie->getNbInscriptionsMax() ;
-            if ($nbInscrits > $nbPlaces) {
-                $count2++;
-                $defauts[]=$sortie;
-            }
-        }
-        dump($count);
-        dump($count2);
-
-        return $this->render('main/ville.html.twig', [
-            'defauts' => $defauts,
-        ]);
-    }
 }

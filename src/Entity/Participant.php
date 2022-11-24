@@ -59,7 +59,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'estInscrit', targetEntity: Inscription::class)]
     private Collection $inscriptions;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 
     public function __construct()

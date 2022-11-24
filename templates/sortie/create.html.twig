@@ -75,7 +75,7 @@
                     if($firstPassageVille) {
                         nouveauCodePostal.text('Code postal : ' + response.responseJSON.codePostal);
                         nouveauCodePostal.attr("id","codePostal");
-                        nouveauCodePostal.prependTo($(".affichage"));
+                        nouveauCodePostal.prependTo($(".affichageCoordoner"));
                         $firstPassageVille = false;
                     } else {
                         $("#codePostal").text('Code postal : ' + response.responseJSON.codePostal);

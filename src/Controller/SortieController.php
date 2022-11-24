@@ -26,7 +26,6 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/sortie', name: 'sortie_')]
 class SortieController extends AbstractController
 {
-    #[Route('/create', name: 'createSansId')]
     #[Route('/create/{id}', name: 'create', requirements: ['page' => '\d+'])]
     public function create(
         Request $request,

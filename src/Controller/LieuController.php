@@ -29,7 +29,7 @@ class LieuController extends AbstractController
             $lieuRepository->save($lieu, true);
 
             $this->addFlash('success', 'Le lieu est bien enregistré!');
-            return $this->redirectToRoute('sortie_create');
+            return $this->redirectToRoute('main_home');
         }
 
         return $this->render('lieu/create.html.twig', [

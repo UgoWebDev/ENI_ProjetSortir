@@ -61,6 +61,10 @@ p
     margin-left: 14px;
 }
 
+header a:hover  {
+    color: #2f2f2f;
+}
+
 a
 {
     text-decoration: none;
@@ -203,6 +207,11 @@ input[type=text], input[type=number], input[type=password]{
     align-items: center;
 }
 
+.create{
+    margin-top: 2rem;
+    text-align: center;
+}
+
 .btn, .btn-lg, #main_search, #main_create{
     border:none;
     outline:none;
@@ -223,18 +232,12 @@ footer{
     text-align: center;
 }
 
-.tab_sorties, .tab_participant {
+.tab_sorties, .tab_participant, .table {
     min-height: 300px;
     max-height: 500px;
     margin-bottom: 1rem;
     overflow: auto;
     text-align: center;
-    display: flex;
-    justify-content: center;
-}
-
-table {
-    min-height: 400px;
 }
 
 .tab_sorties_mini
@@ -252,6 +255,7 @@ table {
 table {
     border-collapse: collapse;
     width: 100%;
+    min-height: 400px;
 }
 
 th, td {

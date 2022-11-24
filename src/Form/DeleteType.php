@@ -16,6 +16,7 @@ class DeleteType extends AbstractType
 
             ->add('txtAnnulation', TextType::class, [
                 'label' => "Raison de l'annulation : ",
+                'required' => false,
             ])
          ;
     }

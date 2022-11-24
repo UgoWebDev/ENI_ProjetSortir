@@ -239,11 +239,15 @@ class SortieController extends AbstractController
             $deleteForm->handleRequest($request);
 
             if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
-                $sortie->setTxtAnnulation($deleteForm->get('txtAnnulation')->getData());
-                $etat = $etatRepository->find(6);
-                $sortie->setEtat($etat);
-                $sortieRepository->save($sortie, true);
-                $this->addFlash('success', 'La sortie est bien supprimée!');
+                if ($deleteForm->getClickedButton() && 'valider' === $deleteForm->getClickedButton()->getName()) {
+                    $sortie->setTxtAnnulation($deleteForm->get('txtAnnulation')->getData());
+                    $etat = $etatRepository->find(6);
+                    $sortie->setEtat($etat);
+                    $sortieRepository->save($sortie, true);
+                    $this->addFlash('success', 'La sortie est bien supprimée!');
+                } else {
+                    $this->addFlash('failure', 'La suppression de la sortie a été annulée !');
+                }
                 return $this->redirectToRoute('main_home');
             }
 

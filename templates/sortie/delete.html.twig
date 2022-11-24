@@ -5,9 +5,13 @@
         {{ form_start(commentForm) }}
         <h1>Annulation d'une sortie</h1>
         <h2>{{ sortie.nom }}</h2>
+        <div>Date de la sortie : {{ sortie.dateHeureDebut|date("d/m/Y") }}</div>
+        <div>Campus : {{ sortie.siteOrganisateur.nom }}</div>
+        <div>Lieu : {{ sortie.lieu.nom ~ ' ' ~ sortie.lieu.rue ~ ' ' ~ sortie.lieu.ville.codePostal ~ ' ' ~ sortie.lieu.ville.nom }}</div>
         <br />
         {{ form_widget(commentForm) }}
-        <button>Valider</button>
+        <button name = 'valider'>Valider</button>
+        <button name = 'annuler'>Annuler</button>
         {{ form_end(commentForm) }}
     </div>
 

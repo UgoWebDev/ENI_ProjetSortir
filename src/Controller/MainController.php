@@ -30,7 +30,7 @@ class MainController extends AbstractController
         $searchOptions['searchName'] = '';
         $searchOptions['dateDebut'] = null;
         $searchOptions['dateFin'] = null;
-        $searchOptions['isOrganisateur'] = true;
+        $searchOptions['isOrganisateur'] = false;
         $searchOptions['isInscrit'] = true;
         $searchOptions['isNotInscrit'] = true;
         $searchOptions['isPassed'] = false;

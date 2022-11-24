@@ -26,6 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/sortie', name: 'sortie_')]
 class SortieController extends AbstractController
 {
+    #[Route('/create', name: 'createSansId')]
     #[Route('/create/{id}', name: 'create', requirements: ['page' => '\d+'])]
     public function create(
         Request $request,
@@ -42,11 +43,13 @@ class SortieController extends AbstractController
         }else{
             $sortie = $sortieRepository -> find($id);
 
-            $ville = $sortie -> getLieu() -> getVille() -> getNom();
+
+            $ville = $sortie -> getLieu() -> getVille();
             dump($ville);
 
-            $sortie -> getLieu() -> getVille() -> setNom($ville);
+            $sortie -> getLieu() -> getVille() -> setNom($ville -> getNom());
             dump($sortie);
+
 
             $sortieForm = $this->createForm(SortieType::class, $sortie);
         }

@@ -95,6 +95,11 @@
                 </tr>
             {% endfor %}
         </table>
+    </div>
+
+    <div style="text-align: center" id="creaSortie">
+    {{ form_end(mainForm) }}
+    </div>
 
         <div class="tab_sorties_mini">
             <h2>Mes sorties :</h2>
@@ -117,10 +122,4 @@
                 </tbody>
             </table>
         </div>
-
-    </div>
-    <div style="text-align: center">
-        {{ form_end(mainForm) }}
-    </div>
-
 {% endblock %}

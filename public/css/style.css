@@ -257,6 +257,7 @@ input[type=text], input[type=number], input[type=password]{
     font-family:inherit;
     font-size:inherit;
 }
+
 .btn-link:active{
     color:#FF0000;
 }
@@ -279,7 +280,7 @@ footer{
     display: none;
 }
 
-.tab_sorties thead th {
+thead th {
     position: sticky;
     top: 0;
     z-index: 1;
@@ -328,7 +329,6 @@ th {
 
 
 
-
 @media screen and (max-width: 960px)
 {
     body
@@ -360,21 +360,29 @@ th {
         display: none;
     }
 
+    header a:hover
+    {
+        color: black;
+    }
 
     h2
     {
         margin-bottom: 2rem;
+        font-size: larger;
     }
 
     .tab_sorties
     {
         display: none;
-        align-content: center;
     }
 
     .tab_sorties_mini
     {
+        max-height: 500px;
+        margin-bottom: 1rem;
+        overflow: auto;
         display: block;
+        margin-top: -250px;
     }
 
     .container_detail
@@ -399,6 +407,30 @@ th {
     {
         color: rgb(24,74,123);
         text-decoration: underline;
+    }
+
+    .container_detail
+    {
+        display: flex;
+        flex-wrap: nowrap;
+        margin-bottom: 8rem;
+        border-bottom: none;
+    }
+
+    .description
+    {
+        margin-top: -35px;
+    }
+
+    .infosR
+    {
+        margin-top: -35px;
+        align-items: flex-start;
+    }
+
+    #creaSortie
+    {
+        display: none;
     }
 
     footer

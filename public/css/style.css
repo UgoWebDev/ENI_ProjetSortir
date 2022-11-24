@@ -52,13 +52,6 @@ p
     margin-right: 2rem;
 }
 
-li
-{
-    list-style-type: none;
-    display: flex;
-    margin-bottom: 5px;
-}
-
 .logo
 {
     font-family: 'Fredoka One', cursive, Verdana, sans-serif;
@@ -107,8 +100,6 @@ main {
 .pdp img {
     width: 300px;
 }
-
-
 
 #registration_form, #main, form {
     margin: 0 0 0 2rem;
@@ -249,12 +240,6 @@ th {
 {
     display: none;
 }
-
-
-
-
-
-
 
 
 

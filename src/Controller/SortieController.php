@@ -16,6 +16,7 @@ use App\Repository\SortieRepository;
 use App\Repository\VilleRepository;
 use DateTime;
 use Doctrine\ORM\EntityManager;
+use phpDocumentor\Reflection\Types\Void_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,11 +42,13 @@ class SortieController extends AbstractController
         }else{
             $sortie = $sortieRepository -> find($id);
 
-            $ville = $sortie-> getLieu() -> getVille() -> getNom();
+            $ville = $sortie -> getLieu() -> getVille() -> getNom();
+            dump($ville);
 
-            $sortieForm = $this->createForm(SortieType::class, $sortie, [
-                'attr' => 'ville',
-            ]);
+            $sortie -> getLieu() -> getVille() -> setNom($ville);
+            dump($sortie);
+
+            $sortieForm = $this->createForm(SortieType::class, $sortie);
         }
 
 

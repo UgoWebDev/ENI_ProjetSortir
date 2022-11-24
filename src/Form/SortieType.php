@@ -67,6 +67,8 @@ class SortieType extends AbstractType
                 'label' => 'Lieu :',
                 'choices' => $lieux,
                 ]);
+
+            dump($lieux);
         };
 
         $builder->addEventListener(

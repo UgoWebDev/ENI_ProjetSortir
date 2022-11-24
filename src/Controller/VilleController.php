@@ -66,13 +66,13 @@ class VilleController extends AbstractController
         ]);
     }
 
-    #[Route('/delete/{id}', name: 'delete', methods: ['POST'], requirements: ['page' => '\d+'])]
-    public function delete(Request $request, Ville $ville, VilleRepository $villeRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$ville->getId(), $request->request->get('_token'))) {
-            $villeRepository->remove($ville, true);
-        }
-
-        return $this->redirectToRoute('ville_index', [], Response::HTTP_SEE_OTHER);
-    }
+//    #[Route('/delete/{id}', name: 'delete', methods: ['POST'], requirements: ['page' => '\d+'])]
+//    public function delete(Request $request, Ville $ville, VilleRepository $villeRepository): Response
+//    {
+//        if ($this->isCsrfTokenValid('delete'.$ville->getId(), $request->request->get('_token'))) {
+//            $villeRepository->remove($ville, true);
+//        }
+//
+//        return $this->redirectToRoute('ville_index', [], Response::HTTP_SEE_OTHER);
+//    }
 }

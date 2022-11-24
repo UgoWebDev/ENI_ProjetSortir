@@ -6,31 +6,60 @@
     <h2>Nom de la sortie : {{ sortie.nom }}</h2>
     <h3>Statut de la sortie : {{ sortie.etat.libelle }}</h3>
     <div class="container_detail">
-        <div>
-            <div>Date et heure de la sortie : {{ sortie.dateHeureDebut | date("d/m/Y h:i") }}</div>
-            <div>Date limite d'inscription : {{ sortie.dateLimiteInscription | date("d/m/Y") }}</div>
-            <div>Nombre de places : {{ sortie.nbInscriptionsMax }}</div>
-            <div>Durée : {{ sortie.duree }} minutes</div>
-            <div class="description">Description et infos : {{ sortie.infosSortie }}</div>
+        <div class="infos">
+            <div>
+                Nombre de places : {{ sortie.nbInscriptionsMax }}
+            </div>
+            <div>
+                Durée : {{ sortie.duree }} minutes
+            </div>
+            <div>
+                Date et heure de la sortie : {{ sortie.dateHeureDebut | date("d/m/Y h:i") }}
+            </div>
+            <div>
+                Date limite d'inscription : {{ sortie.dateLimiteInscription | date("d/m/Y") }}
+            </div>
+
         </div>
-        <div>
-            <div>Campus : {{ sortie.siteOrganisateur.nom }}</div>
-            <div>Ville : {{ sortie.lieu.ville.nom }}</div>
-            <div>Lieu : {{ sortie.lieu.nom }}</div>
-            <div>Rue : {{ sortie.lieu.rue }}</div>
-            <div>Code Postal : {{ sortie.lieu.ville.codePostal }}</div>
-            <div>Latitude : {{ sortie.lieu.latitude }}</div>
-            <div>Longitude : {{ sortie.lieu.longitude }}</div>
+        <div class="description">Description et infos : {{ sortie.infosSortie }}</div>
+    </div>
+
+    <div class="container_detail">
+        <div class="infos">
+            <div>
+                Campus : {{ sortie.siteOrganisateur.nom }}
+            </div>
+            <div>
+                Ville : {{ sortie.lieu.ville.nom }}
+            </div>
+            <div>
+                Lieu : {{ sortie.lieu.nom }}
+            </div>
+
+        </div>
+        <div class="infosR">
+            <div>
+                Rue : {{ sortie.lieu.rue }}
+            </div>
+            <div>
+                Code Postal : {{ sortie.lieu.ville.codePostal }}
+            </div>
+            <div>
+                Latitude : {{ sortie.lieu.latitude }}
+            </div>
+            <div>
+                Longitude : {{ sortie.lieu.longitude }}
+            </div>
         </div>
     </div>
-    
+
     <div class="list_inscrit">
         <h2>Liste des participants inscrits:</h2>
         <div class="tab_participant">
             <table>
                 <thead>
-                    <th>Pseudo</th>
-                    <th>Nom</th>
+                <th>Pseudo</th>
+                <th>Nom</th>
                 </thead>
 
                 {% for inscrit in sortie.inscriptions %}
@@ -42,8 +71,6 @@
                             {{ inscrit.estInscrit.nom }}
                         </td>
                     </tr>
-
-
                 {% endfor %}
             </table>
         </div>

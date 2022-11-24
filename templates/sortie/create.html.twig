@@ -18,7 +18,7 @@
             {{ form_row(sortieForm.lieu) }}
             <a href="{{ path('lieu_ajout') }}"><img src="{{ asset('images/img_ajout_lieu.png') }}" alt="signe + pour ajout lieu"></a>
         </div>
-        <div class="affichage">
+        <div class="affichageCoordoner">
 
         </div>
 
@@ -32,12 +32,12 @@
 
     <script>
         let $ville = $('#sortie_ville');
-        let $firstVille = true;
-        console.log('entrée fonction ' + $firstVille);
+        let $firstPassageVille = true;
+        let $firstPassageLieu = true;
 
         $ville.change(function() {
 
-            console.log('entrée change ' + $firstVille);
+            console.log('entrée change ' + $firstPassageVille);
 
             let $form = $(this).closest('form');
 
@@ -63,19 +63,17 @@
                 method: "GET",
                 complete: function (response){
                     let nouveauCodePostal = $("<div></div>");
-                    console.log('avant test ' + $firstVille);
-                    if($firstVille) {
+
+                    if($firstPassageVille) {
                         nouveauCodePostal.text('Code postal : ' + response.responseJSON.codePostal);
                         nouveauCodePostal.attr("id","codePostal");
                         nouveauCodePostal.prependTo($(".affichage"));
-                        $firstVille = false;
+                        $firstPassageVille = false;
                     } else {
                         $("#codePostal").text('Code postal : ' + response.responseJSON.codePostal);
                     }
                 }
             });
-
-            console.log('sortie change ' + $firstVille);
         });
 
         $(document).on('change', '#sortie_lieu', function() {
@@ -89,24 +87,29 @@
                 url: $url,
                 method: "GET",
                 complete: function (response){
-                    let rueReturn = 'Rue : ' + response.responseJSON.rue;
-                    let latitudeReturn = 'Latitude : ' + response.responseJSON.latitude;
-                    let longitudeReturn = 'Longitude : ' + response.responseJSON.longitude;
-
                     let nouvelleRue = $("<div></div>");
-                    nouvelleRue.text(rueReturn);
-                    nouvelleRue.addClass('rue');
-                    nouvelleRue.prependTo($(".affichage"));
-
                     let nouvelleLatitude = $("<div></div>");
-                    nouvelleLatitude.text(latitudeReturn);
-                    nouvelleRue.addClass('latitude');
-                    nouvelleLatitude.appendTo($(".affichage"));
-
                     let nouvelleLongitude = $("<div></div>");
-                    nouvelleLongitude.text(longitudeReturn);
-                    nouvelleRue.addClass('longitude');
-                    nouvelleLongitude.appendTo($(".affichage"));
+
+                    if($firstPassageLieu) {
+                        nouvelleRue.text('Rue : ' + response.responseJSON.rue);
+                        nouvelleRue.attr('id', 'rue');
+                        nouvelleRue.prependTo($(".affichageCoordoner"));
+
+                        nouvelleLatitude.text('Latitude : ' + response.responseJSON.latitude);
+                        nouvelleLatitude.attr('id', 'latitude');
+                        nouvelleLatitude.appendTo($(".affichageCoordoner"));
+
+                        nouvelleLongitude.text('Longitude : ' + response.responseJSON.longitude);
+                        nouvelleLongitude.attr('id', 'longitude');
+                        nouvelleLongitude.appendTo($(".affichageCoordoner"));
+
+                        $firstPassageLieu =  false;
+                    }else{
+                        $("#rue").text('Rue : ' + response.responseJSON.rue);
+                        $("#latitude").text('Latitude : ' + response.responseJSON.latitude);
+                        $("#longitude").text('Longitude : ' + response.responseJSON.longitude);
+                    }
                 }
             });
         });

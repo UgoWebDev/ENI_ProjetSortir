@@ -56,9 +56,6 @@ class SortieType extends AbstractType
                 'mapped' => false,
             ]);
 
-        dump($builder);
-        dump($this);
-
         $formModifier = function (FormInterface $form, Ville $ville = null) {
 
             $lieux = null === $ville ? [] : $ville->getLieux();
@@ -77,7 +74,7 @@ class SortieType extends AbstractType
             function(FormEvent $event) use ($formModifier) {
 
                 $data = $event->getData();
-
+                dump($data);
 
                 $formModifier($event->getForm(), ($data->getLieu() === null ? null : $data->getLieu()->getVille()));
             }
@@ -87,7 +84,6 @@ class SortieType extends AbstractType
             FormEvents::POST_SUBMIT,
             function (FormEvent $event) use ($formModifier) {
                 $ville = $event->getForm()->getData();
-
                 $formModifier($event->getForm()->getParent(), $ville);
             });
 

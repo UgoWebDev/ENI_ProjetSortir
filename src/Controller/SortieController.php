@@ -36,14 +36,19 @@ class SortieController extends AbstractController
         if($id == 0){
             $sortie = new Sortie();
             $ville = null;
+
+            $sortieForm = $this->createForm(SortieType::class, $sortie);
         }else{
             $sortie = $sortieRepository -> find($id);
-            $ville = $sortie-> getLieu() ->getVille()->getNom();
-            dump($sortie);
-            dump($ville);
+
+            $ville = $sortie-> getLieu() -> getVille() -> getNom();
+
+            $sortieForm = $this->createForm(SortieType::class, $sortie, [
+                'attr' => 'ville',
+            ]);
         }
 
-        $sortieForm = $this->createForm(SortieType::class, $sortie);
+
 
         $sortieForm->handleRequest($request);
 
@@ -118,9 +123,11 @@ class SortieController extends AbstractController
     ): Response
     {
         $sortie = $sortieRepository -> find($id);
-
+        $ville = $sortie-> getLieu() ->getVille()->getNom();
+        dump($ville);
         return $this->render('sortie/create.html.twig',[
             'sortie' => $sortie,
+            'ville' => $ville,
         ]);
     }
 

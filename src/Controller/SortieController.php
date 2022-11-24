@@ -153,7 +153,7 @@ class SortieController extends AbstractController
         if ($sortie->getEtat()->getId() != 2) {
             $this->addFlash('fail', "L'état initial n'est pas ouvert !");
         } elseif ($sortie->getDateLimiteInscription() < new DateTime('now')) {
-            $this->addFlash('fail', "Impossible de s'inscrire à une sortie après la date limite !");
+            $this->addFlash('fail', "Impossible de sinscrire à une sortie après la date limite !");
         } elseif ($sortie->getNbInscriptionsMax()  <= $sortie->getInscriptions()->count()) {
             $this->addFlash('fail', "Impossible de s'inscrire à une sortie déjà pleine !");
         } else {
@@ -171,7 +171,7 @@ class SortieController extends AbstractController
             // Sauvegarde les entités
             $inscriptionRepository->save($inscription, true);
 
-            $this->addFlash('success', 'Vous êtes bien inscrit à la sortie !');
+            $this->addFlash('success', 'Vous êtes bien inscrit à la sortie!');
         }
         return $this->redirectToRoute('main_home');
     }
@@ -203,7 +203,7 @@ class SortieController extends AbstractController
             // sauvegarde l'entité
             $inscriptionRepository->save($inscription, true);
 
-            $this->addFlash('success', 'Vous êtes bien désisté.e de la sortie !');
+            $this->addFlash('success', 'Vous êtes bien désisté de la sortie!');
         }
         return $this->redirectToRoute('main_home');
     }
@@ -224,7 +224,7 @@ class SortieController extends AbstractController
             $etat = $etatRepository->find(2);
             $sortie->setEtat($etat);
             $sortieRepository->save($sortie, true);
-            $this->addFlash('success', 'La sortie est bien publiée !');
+            $this->addFlash('success', 'La sortie est bien publié!');
 
         }
         return $this->redirectToRoute('main_home');

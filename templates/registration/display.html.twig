@@ -10,22 +10,27 @@
             <div class="pdp">
                 <img src="{{ asset('upload/photos/' ~ user.photo) }}" alt="Photo indisponible">
             </div>
-
             <section class="display">
-
-                <div>
-                    <p>Prénom : {{ user.prenom }}</p>
-                </div>
-                <div>
-                    <p>Nom : {{ user.nom }}</p>
-                </div>
-                <div>
-                    <p>Telephone : {{ user.telephone }}</p>
-                </div>
-                <div>
-                    <p>Email : {{ user.email }}</p>
-                </div>
-
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th>Prénom :</th>
+                        <td>{{ user.prenom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nom :</th>
+                        <td>{{ user.nom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Telephone :</th>
+                        <td>{{ user.telephone }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email :</th>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    </tbody>
+                </table>
                 {% if is_granted("ROLE_ADMIN") %}
                     <div>
                         <button>
@@ -38,7 +43,6 @@
 
 
                 {% endif %}
-                
             </section>
         </div>
     </div>

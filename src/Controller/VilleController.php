@@ -30,6 +30,7 @@ class VilleController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $villeRepository->save($ville, true);
+            $this->addFlash('success', 'Vous avez bien crée une nouvelle ville !');
 
             return $this->redirectToRoute('ville_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -56,6 +57,7 @@ class VilleController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $villeRepository->save($ville, true);
+            $this->addFlash('success', 'La ville a bien été modifiée !');
 
             return $this->redirectToRoute('ville_index', [], Response::HTTP_SEE_OTHER);
         }

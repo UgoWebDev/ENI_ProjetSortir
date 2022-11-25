@@ -2,7 +2,7 @@
             <div class="hidden">
                 {% if is_granted("ROLE_ADMIN") %}
                     <a href="{{ path('ville_index' )}}" title="villes">Villes | </a>
-                    <a href="{{ path('profile_register')}}" title="Campus">Campus | </a>
+{#                    <a href="{{ path('profile_register')}}" title="Campus">Campus | </a>#}
                     <a href="{{ path('profile_register')}}" title="s'inscrire">Inscrire un autre utilisateur |  </a>
                 {% endif %}
                 <a href="{{ path('main_home' )}}" title="Accueil">Accueil | </a>

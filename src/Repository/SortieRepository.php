@@ -102,6 +102,9 @@ class SortieRepository extends ServiceEntityRepository
            $queryBuilder->andWhere('s.organisateur = :id' );
            $queryBuilder->setParameter('id',$options["user"])    ;
         }
+//        dump($options["isInscrit"]);
+//        dump($options["isNotInscrit"]);
+//        dump(!$options["isInscrit"] || !$options["isNotInscrit"]);
         if (!$options["isInscrit"] || !$options["isNotInscrit"]) {
             if ($options["isInscrit"]) {
                 $queryBuilder->andWhere('i.estInscrit = :ido');

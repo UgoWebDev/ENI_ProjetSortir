@@ -49,7 +49,7 @@ class MainType extends AbstractType
                 'required' => false,
             ])
             ->add('isNotInscrit', CheckboxType::class, [
-                'label'    => 'Sorties auxquelles je ne suis inscrit ',
+                'label'    => 'Sorties auxquelles je ne suis pas inscrit ',
                 'required' => false,
             ])
             ->add('isPassed', CheckboxType::class, [

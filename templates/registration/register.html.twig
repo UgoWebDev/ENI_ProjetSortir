@@ -17,6 +17,10 @@
 
     {{ form_row(registrationForm.photoFile) }}
 
+    {% if app.user %}
+        <button type="submit" class="btn">Inscrire un utilisateur</button>
+    {% else %}
         <button type="submit" class="btn">S'inscrire</button>
+    {% endif %}
     {{ form_end(registrationForm) }}
 {% endblock %}

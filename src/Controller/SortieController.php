@@ -37,8 +37,6 @@ class SortieController extends AbstractController
         if($id == 0){
             $sortie = new Sortie();
             $ville = null;
-
-            $sortieForm = $this->createForm(SortieType::class, $sortie);
         }else{
             $sortie = $sortieRepository -> find($id);
 
@@ -48,12 +46,9 @@ class SortieController extends AbstractController
 
             $sortie -> getLieu() -> getVille() -> setNom($ville -> getNom());
             dump($sortie);
-
-
-            $sortieForm = $this->createForm(SortieType::class, $sortie);
         }
 
-
+        $sortieForm = $this->createForm(SortieType::class, $sortie);
 
         $sortieForm->handleRequest($request);
 

@@ -56,23 +56,30 @@
         $ville.change(function() {
 
             let $form = $(this).closest('form');
+            console.log($form.attr('action'),)
 
             let data = {};
             data[$ville.attr('name')] = $ville.val();
+            console.log(data);
+            console.log($form.attr('action'),)
 
             $.ajax({
                 url : $form.attr('action'),
                 type : $form.attr('method'),
                 data : data,
                 complete: function(html) {
+                    console.log(html);
+                    console.log($(html.responseText).find('#sortie_lieu'));
                     $('#sortie_lieu').replaceWith(
                         $(html.responseText).find('#sortie_lieu')
                     );
+                    console.log($(html.responseText).find('#sortie_lieu'));
                 },
             });
             let $id = $ville.val();
             console.log($id);
             let $url = '{{ path('sortie_villeSansID' ) }}' + '/' + $id;
+
             console.log($url);
             $.ajax({
                 url: $url,

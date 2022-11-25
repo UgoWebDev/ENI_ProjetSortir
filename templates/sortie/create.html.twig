@@ -3,7 +3,7 @@
 {% block title %}{{ parent() }} | Créer une sortie{% endblock %}
 
 {% block body %}
-    <div>
+    <div class="sortie">
         {{ form_start(sortieForm) }}
 
         {{ form_row(sortieForm.nom) }}
@@ -23,13 +23,21 @@
             {{ form_row(sortieForm.lieu) }}
             <a href="{{ path('lieu_ajout') }}"><img src="{{ asset('images/img_ajout_lieu.png') }}" alt="signe + pour ajout lieu"></a>
         </div>
+
+
+        {% if sortie.lieu %}
+            <div class="adresseActuelle">
+                <p>Rue : {{ sortie.lieu.rue }}</p>
+                <p>Code Postal : {{ sortie.lieu.ville.codePostal }}</p>
+                <p>Latitude : {{ sortie.lieu.latitude }}</p>
+                <p>Longitude : {{ sortie.lieu.longitude }}</p>
+            </div>
+            <p id="nouvelleAdresse">La nouvelle adresse est:</p>
+        {% endif %}
+
+
         <div class="affichageCoordoner">
-            {% if sortie.lieu %}
-                <div>Rue : {{ sortie.lieu.rue }}</div>
-                <div>Code Postal : {{ sortie.lieu.ville.codePostal }}</div>
-                <div>Latitude : {{ sortie.lieu.latitude }}</div>
-                <div>Longitude : {{ sortie.lieu.longitude }}</div>
-            {% endif %}
+
         </div>
 
         <button class="btn">Enregistrer</button>

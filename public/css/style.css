@@ -40,6 +40,11 @@ header
     margin-bottom: 2.5rem;
 }
 
+header h1 a:hover
+{
+    color: black;
+}
+
 nav{
     display: flex;
     justify-content: flex-end;
@@ -47,13 +52,12 @@ nav{
     margin-right: 2rem;
 }
 
-p
+.dateDuJour
 {
     text-align: right;
     margin-right: 2rem;
+    margin-top: 6px;
 }
-
-
 
 .logo
 {
@@ -262,11 +266,6 @@ input[type=text], input[type=number], input[type=password]{
     color:#FF0000;
 }
 
-footer{
-    margin-top: 10rem;
-    text-align: center;
-}
-
 .tab_sorties, .tab_participant, .table {
     min-height: 300px;
     max-height: 500px;
@@ -315,7 +314,7 @@ th {
 
 .ajout_lieu
 {
-    max-width: 500px;
+    max-width: 600px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -326,6 +325,29 @@ th {
     display: none;
 }
 
+/*CSS Modif sortie*/
+
+.sortie
+{
+    margin-top: 11rem;
+}
+
+#nouvelleAdresse
+{
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: large;
+}
+
+footer{
+    margin-top: 12rem;
+    text-align: center;
+}
+
+.adresseActuelle, .affichageCoordoner
+{
+    margin-left: 13px;
+}
 
 
 
@@ -358,11 +380,6 @@ th {
     nav .hidden
     {
         display: none;
-    }
-
-    header a:hover
-    {
-        color: black;
     }
 
     h2
